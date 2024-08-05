@@ -1,0 +1,6 @@
+@ReizzzTracking_HostAddress = http://localhost:5193
+
+GET {{ReizzzTracking_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
