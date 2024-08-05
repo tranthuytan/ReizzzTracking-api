@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ReizzzTracking.DAL\ReizzzTracking.DAL.csproj" />
+  </ItemGroup>
+
 </Project>

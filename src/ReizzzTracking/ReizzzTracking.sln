@@ -5,6 +5,10 @@ VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReizzzTracking", "ReizzzTracking.csproj", "{78D7B65E-0D80-44AB-A05D-6136F748D336}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReizzzTracking.DAL", "..\ReizzzTracking.DAL\ReizzzTracking.DAL.csproj", "{206E114A-47FD-4EE0-9682-BA8D2DAD735F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReizzzTracking.BL", "..\ReizzzTracking.BL\ReizzzTracking.BL.csproj", "{014FAA19-6F1D-4812-A8ED-8BAF0B287019}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{78D7B65E-0D80-44AB-A05D-6136F748D336}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78D7B65E-0D80-44AB-A05D-6136F748D336}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78D7B65E-0D80-44AB-A05D-6136F748D336}.Release|Any CPU.Build.0 = Release|Any CPU
+		{206E114A-47FD-4EE0-9682-BA8D2DAD735F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{206E114A-47FD-4EE0-9682-BA8D2DAD735F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{206E114A-47FD-4EE0-9682-BA8D2DAD735F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{206E114A-47FD-4EE0-9682-BA8D2DAD735F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{014FAA19-6F1D-4812-A8ED-8BAF0B287019}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{014FAA19-6F1D-4812-A8ED-8BAF0B287019}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{014FAA19-6F1D-4812-A8ED-8BAF0B287019}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{014FAA19-6F1D-4812-A8ED-8BAF0B287019}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

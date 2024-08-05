@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReizzzTracking.DAL.Common.BaseRepository
+namespace ReizzzTracking.DAL.Common.UnitOfWork
 {
-    public interface IBaseRepository
+    public interface IUnitOfWork
     {
     }
 }
