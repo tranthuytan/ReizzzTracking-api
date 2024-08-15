@@ -46,33 +46,30 @@ public partial class ReizzzTrackingV1Context : DbContext
     {
         modelBuilder.Entity<CategoryType>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__category__3214EC07B3DC042D");
+            entity.HasKey(e => e.Id).HasName("PK__category__3214EC079C65B8F4");
 
             entity.ToTable("category_types");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Type).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__roles__3214EC07305699B6");
+            entity.HasKey(e => e.Id).HasName("PK__roles__3214EC07C57C2FD8");
 
             entity.ToTable("roles");
 
-            entity.HasIndex(e => e.Name, "UQ__roles__737584F62825F4B9").IsUnique();
+            entity.HasIndex(e => e.Name, "UQ__roles__737584F61C4A63D0").IsUnique();
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Name).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Routine>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__routines__3214EC07D677BD55");
+            entity.HasKey(e => e.Id).HasName("PK__routines__3214EC076EEFA753");
 
             entity.ToTable("routines");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Name).HasMaxLength(100);
             entity.Property(e => e.StartTime).HasMaxLength(50);
 
@@ -87,11 +84,10 @@ public partial class ReizzzTrackingV1Context : DbContext
 
         modelBuilder.Entity<RoutineCollection>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__routine___3214EC07F127C143");
+            entity.HasKey(e => e.Id).HasName("PK__routine___3214EC0728969CFB");
 
             entity.ToTable("routine_collections");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Name).HasMaxLength(100);
 
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.RoutineCollections)
@@ -101,11 +97,10 @@ public partial class ReizzzTrackingV1Context : DbContext
 
         modelBuilder.Entity<TimeExchange>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__time_exc__3214EC0708EB827A");
+            entity.HasKey(e => e.Id).HasName("PK__time_exc__3214EC07AD450375");
 
             entity.ToTable("time_exchanges");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Multiplier).HasColumnType("decimal(5, 2)");
 
             entity.HasOne(d => d.FromUnit).WithMany(p => p.TimeExchangeFromUnits)
@@ -119,21 +114,19 @@ public partial class ReizzzTrackingV1Context : DbContext
 
         modelBuilder.Entity<TimeUnit>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__time_uni__3214EC0726C24675");
+            entity.HasKey(e => e.Id).HasName("PK__time_uni__3214EC078504A563");
 
             entity.ToTable("time_units");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Name).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<TodoSchedule>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__todo_sch__3214EC0709182938");
+            entity.HasKey(e => e.Id).HasName("PK__todo_sch__3214EC07C8F3D2BE");
 
             entity.ToTable("todo_schedule");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.EndAt).HasColumnType("datetime");
             entity.Property(e => e.StartAt).HasColumnType("datetime");
 
@@ -152,18 +145,17 @@ public partial class ReizzzTrackingV1Context : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__users__3214EC07008EC82D");
+            entity.HasKey(e => e.Id).HasName("PK__users__3214EC07C9583F5A");
 
             entity.ToTable("users");
 
-            entity.HasIndex(e => e.Username, "UQ__users__536C85E48E8361A7").IsUnique();
+            entity.HasIndex(e => e.Username, "UQ__users__536C85E4454C1E95").IsUnique();
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Bio).HasMaxLength(250);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.Name).HasMaxLength(100);
-            entity.Property(e => e.Password).HasMaxLength(50);
+            entity.Property(e => e.Password).HasMaxLength(250);
             entity.Property(e => e.PhoneNumber).HasMaxLength(10);
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
             entity.Property(e => e.Username).HasMaxLength(50);
@@ -171,9 +163,11 @@ public partial class ReizzzTrackingV1Context : DbContext
 
         modelBuilder.Entity<UserRole>(entity =>
         {
-            entity.HasKey(e => new { e.Id, e.UserId, e.RoleId }).HasName("PK__user_rol__F8E69A0DE870384D");
+            entity.HasKey(e => new { e.Id, e.UserId, e.RoleId }).HasName("PK__user_rol__F8E69A0DAE5A605E");
 
             entity.ToTable("user_roles");
+
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.Role).WithMany(p => p.UserRoles)
                 .HasForeignKey(d => d.RoleId)
@@ -188,11 +182,10 @@ public partial class ReizzzTrackingV1Context : DbContext
 
         modelBuilder.Entity<UserTask>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__user_tas__3214EC075FD1429F");
+            entity.HasKey(e => e.Id).HasName("PK__user_tas__3214EC07FC3CC9CC");
 
             entity.ToTable("user_tasks");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
             entity.Property(e => e.Description).HasMaxLength(250);
             entity.Property(e => e.Name).HasMaxLength(100);

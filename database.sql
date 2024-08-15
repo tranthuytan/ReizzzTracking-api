@@ -10,7 +10,7 @@ go
 CREATE TABLE users (
     Id bigint NOT NULL IDENTITY(1,1) PRIMARY KEY,
     Username nvarchar(50)  NOT NULL UNIQUE,
-    Password nvarchar(50) ,
+    Password nvarchar(250) ,
     Name nvarchar(100) NOT NULL,
     Email nvarchar(100),
     PhoneNumber nvarchar(10) NOT NULL,

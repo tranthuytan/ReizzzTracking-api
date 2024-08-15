@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReizzzTracking.DAL.Common.BaseRepository
+namespace ReizzzTracking.DAL.Repositories.BaseRepository
 {
     public class PaginationFilter<TEntity> where TEntity : class
     {
