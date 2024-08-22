@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace ReizzzTracking.BL.ViewModels.UserViewModel
 {
-    public class UserAddViewModel
+    public class UserRegisterViewModel
     {
         public string Username { get; set; }
         public string Password { get; set; }
@@ -14,9 +14,9 @@ namespace ReizzzTracking.BL.ViewModels.UserViewModel
         public string Birthday { get; set; }
         public string? Bio { get; set; }
 
-        public UserAddViewModel FromUser(User user)
+        public UserRegisterViewModel FromUser(User user)
         {
-            var result = new UserAddViewModel();
+            var result = new UserRegisterViewModel();
             result.Username = user.Username;
             result.Name = user.Name;
             result.Email = user.Email;
@@ -26,7 +26,7 @@ namespace ReizzzTracking.BL.ViewModels.UserViewModel
             result.Bio = user.Bio;
             return result;
         }
-        public User ToUser(UserAddViewModel userViewModel)
+        public User ToUser(UserRegisterViewModel userViewModel)
         {
             var result = new User
             {

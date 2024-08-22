@@ -44,29 +44,20 @@ public partial class ReizzzTrackingV1Context : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
         modelBuilder.Entity<CategoryType>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__category__3214EC079C65B8F4");
+            entity.HasKey(e => e.Id).HasName("PK__category__3214EC07ADA88A03");
 
             entity.ToTable("category_types");
 
             entity.Property(e => e.Type).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<Role>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__roles__3214EC07C57C2FD8");
-
-            entity.ToTable("roles");
-
-            entity.HasIndex(e => e.Name, "UQ__roles__737584F61C4A63D0").IsUnique();
-
-            entity.Property(e => e.Name).HasMaxLength(50);
-        });
-
         modelBuilder.Entity<Routine>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__routines__3214EC076EEFA753");
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ReizzzTrackingV1Context).Assembly);
+            entity.HasKey(e => e.Id).HasName("PK__routines__3214EC07877522F1");
 
             entity.ToTable("routines");
 
@@ -84,7 +75,7 @@ public partial class ReizzzTrackingV1Context : DbContext
 
         modelBuilder.Entity<RoutineCollection>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__routine___3214EC0728969CFB");
+            entity.HasKey(e => e.Id).HasName("PK__routine___3214EC071AF97170");
 
             entity.ToTable("routine_collections");
 
@@ -97,7 +88,7 @@ public partial class ReizzzTrackingV1Context : DbContext
 
         modelBuilder.Entity<TimeExchange>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__time_exc__3214EC07AD450375");
+            entity.HasKey(e => e.Id).HasName("PK__time_exc__3214EC07B60632EC");
 
             entity.ToTable("time_exchanges");
 
@@ -114,7 +105,7 @@ public partial class ReizzzTrackingV1Context : DbContext
 
         modelBuilder.Entity<TimeUnit>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__time_uni__3214EC078504A563");
+            entity.HasKey(e => e.Id).HasName("PK__time_uni__3214EC0723133C3F");
 
             entity.ToTable("time_units");
 
@@ -123,7 +114,7 @@ public partial class ReizzzTrackingV1Context : DbContext
 
         modelBuilder.Entity<TodoSchedule>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__todo_sch__3214EC07C8F3D2BE");
+            entity.HasKey(e => e.Id).HasName("PK__todo_sch__3214EC07ECF0E426");
 
             entity.ToTable("todo_schedule");
 
@@ -145,11 +136,11 @@ public partial class ReizzzTrackingV1Context : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__users__3214EC07C9583F5A");
+            entity.HasKey(e => e.Id).HasName("PK__users__3214EC07F61BA3CE");
 
             entity.ToTable("users");
 
-            entity.HasIndex(e => e.Username, "UQ__users__536C85E4454C1E95").IsUnique();
+            entity.HasIndex(e => e.Username, "UQ__users__536C85E4AB2DC2C6").IsUnique();
 
             entity.Property(e => e.Bio).HasMaxLength(250);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
@@ -163,7 +154,7 @@ public partial class ReizzzTrackingV1Context : DbContext
 
         modelBuilder.Entity<UserRole>(entity =>
         {
-            entity.HasKey(e => new { e.Id, e.UserId, e.RoleId }).HasName("PK__user_rol__F8E69A0DAE5A605E");
+            entity.HasKey(e => new { e.Id, e.UserId, e.RoleId }).HasName("PK__user_rol__F8E69A0D2F69DE35");
 
             entity.ToTable("user_roles");
 
@@ -182,7 +173,7 @@ public partial class ReizzzTrackingV1Context : DbContext
 
         modelBuilder.Entity<UserTask>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__user_tas__3214EC07FC3CC9CC");
+            entity.HasKey(e => e.Id).HasName("PK__user_tas__3214EC0768926AE1");
 
             entity.ToTable("user_tasks");
 

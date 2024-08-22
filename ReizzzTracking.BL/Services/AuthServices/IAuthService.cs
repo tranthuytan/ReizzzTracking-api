@@ -1,4 +1,5 @@
-﻿using ReizzzTracking.BL.ViewModels.ResultViewModel;
+﻿using ReizzzTracking.BL.ViewModels.ResultViewModels;
+using ReizzzTracking.BL.ViewModels.ResultViewModels.AuthResultViewModel;
 using ReizzzTracking.BL.ViewModels.UserViewModel;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace ReizzzTracking.BL.Services.AuthServices
 {
     public interface IAuthService
     {
-        public Task<ResultViewModel> Register(UserAddViewModel userAddViewModel);
+        public Task<ResultViewModel> Register(UserRegisterViewModel userVM);
+        public Task<LoginResultViewModel> Login(UserLoginViewModel userVM);
     }
 }

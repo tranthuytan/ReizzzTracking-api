@@ -1,13 +1,17 @@
-﻿using System;
+﻿using ReizzzTracking.DAL.Primitives;
+using System;
 using System.Collections.Generic;
 
 namespace ReizzzTracking.DAL.Entities;
 
-public partial class Role
+public class Role : Enumeration<Role>
 {
-    public long Id { get; set; }
+    public static readonly Role Registered = new(1, "Registered");
+    public Role(long id, string name) : base(id, name)
+    {
+    }
 
-    public string Name { get; set; } = null!;
 
     public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+    public virtual ICollection<Permission> Permissions { get; set; }
 }

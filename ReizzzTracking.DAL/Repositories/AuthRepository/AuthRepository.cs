@@ -20,5 +20,16 @@ namespace ReizzzTracking.DAL.Repositories.AuthRepository
             var result = _dbSet.FirstOrDefault(x => x.Email == email);
             return result;
         }
+        public async Task<User> GetUserByUsername(string username)
+        {
+            var result = _dbSet.FirstOrDefault(x => x.Username == username);
+            return result;
+        }
+
+        public async Task<User> Login(string loginUsername, string password)
+        {
+            var result = _dbSet.FirstOrDefault(u => (u.Username == loginUsername || u.Email == loginUsername) && u.Password == password);
+            return result;
+        }
     }
 }

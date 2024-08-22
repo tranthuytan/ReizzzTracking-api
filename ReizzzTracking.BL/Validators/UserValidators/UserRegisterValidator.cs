@@ -3,7 +3,7 @@ using ReizzzTracking.BL.ViewModels.UserViewModel;
 
 namespace ReizzzTracking.BL.Validators.UserValidators
 {
-    public class UserRegisterValidator : AbstractValidator<UserAddViewModel>
+    public class UserRegisterValidator : AbstractValidator<UserRegisterViewModel>
     {
         public UserRegisterValidator()
         {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReizzzTracking.BL.Services.PasswordHasher
+namespace ReizzzTracking.BL.Utils.PasswordHasher
 {
     public interface IPasswordHasher
     {

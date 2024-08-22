@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using ReizzzTracking.DAL.Common.DbFactory;
 using ReizzzTracking.DAL.Common.UnitOfWork;
 using ReizzzTracking.DAL.Repositories.AuthRepository;
+using ReizzzTracking.OptionsSetup;
 
 var builder = WebApplication.CreateBuilder(args);
 var a = builder.Environment;
@@ -15,6 +17,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//add jwt
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
+builder.Services.ConfigureOptions<JwtOptionsSetup>();
+builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,6 +32,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

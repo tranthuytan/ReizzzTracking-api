@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReizzzTracking.BL.Services.PasswordHasher
+namespace ReizzzTracking.BL.Utils.PasswordHasher
 {
     public sealed class PasswordHasher : IPasswordHasher
     {

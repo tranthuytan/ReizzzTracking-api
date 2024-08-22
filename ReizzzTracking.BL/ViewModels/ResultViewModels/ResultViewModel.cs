@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReizzzTracking.BL.ViewModels.ResultViewModel
+namespace ReizzzTracking.BL.ViewModels.ResultViewModels
 {
     public class ResultViewModel
     {

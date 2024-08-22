@@ -23,7 +23,7 @@ CREATE TABLE users (
     UpdatedDate datetime
 )
 CREATE TABLE roles (
-    Id bigint NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    Id bigint NOT NULL PRIMARY KEY,
     Name nvarchar(50)  NOT NULL UNIQUE
 )
 CREATE TABLE user_roles (
