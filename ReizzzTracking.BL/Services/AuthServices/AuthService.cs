@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ReizzzTracking.BL.Errors.Auth;
+using ReizzzTracking.BL.Services.PermissionService;
 using ReizzzTracking.BL.Services.Utils.Authentication;
 using ReizzzTracking.BL.Utils.PasswordHasher;
 using ReizzzTracking.BL.Validators.UserValidators;
@@ -22,17 +23,20 @@ namespace ReizzzTracking.BL.Services.AuthServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IJwtProvider _jwtProvider;
-        public AuthService(IAuthRepository authRepository, IUnitOfWork unitOfWork, IPasswordHasher passwordHasher, IJwtProvider jwtProvider)
+        private readonly IUserService _userService;
+        public AuthService(IAuthRepository authRepository, IUnitOfWork unitOfWork, IPasswordHasher passwordHasher, IJwtProvider jwtProvider, IUserService userService)
         {
             _authRepository = authRepository;
             _unitOfWork = unitOfWork;
             _passwordHasher = passwordHasher;
             _jwtProvider = jwtProvider;
+            _userService = userService;
         }
 
         public async Task<LoginResultViewModel> Login(UserLoginViewModel userLoginViewModel)
         {
             var result = new LoginResultViewModel();
+            var result1 = await _userService.GetPermissionsAsync(1);
             try
             {
                 var user = await _authRepository.FirstOrDefault(u=>u.Username== userLoginViewModel.LoginUsername || u.Email==userLoginViewModel.LoginUsername);

@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ReizzzTracking.BL.Services.AuthServices;
+using ReizzzTracking.BL.Services.PermissionService;
 using ReizzzTracking.BL.Services.Utils.Authentication;
 using ReizzzTracking.BL.Utils.PasswordHasher;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,8 +21,10 @@ public static class BLDependencyInjection
     public static void AddServices(this IServiceCollection services)
     {
         services.AddScoped<IPasswordHasher, PasswordHasher>();
+        services.AddScoped<IJwtProvider,JwtProvider>();
         services.AddScoped<IAuthService, AuthService>();
-        services.AddScoped<IJwtProvider,JwtProvider>(); 
+        services.AddScoped<IUserService, UserService>();
+
     }
 }
 

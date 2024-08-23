@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ReizzzTracking.BL.Services.PermissionService
 {
-    public class PermissionService
+    public interface IUserService
     {
+        Task<HashSet<string>> GetPermissionsAsync(long userId);
     }
 }

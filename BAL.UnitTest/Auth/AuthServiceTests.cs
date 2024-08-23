@@ -2,6 +2,7 @@
 using NSubstitute;
 using ReizzzTracking.BL.Errors.Auth;
 using ReizzzTracking.BL.Services.AuthServices;
+using ReizzzTracking.BL.Services.PermissionService;
 using ReizzzTracking.BL.Services.Utils.Authentication;
 using ReizzzTracking.BL.Utils.PasswordHasher;
 using ReizzzTracking.BL.ViewModels.ResultViewModels;
@@ -20,13 +21,14 @@ namespace BAL.UnitTest.Auth
         private readonly IPasswordHasher _passwordHasherMock;
         private readonly IAuthService _authService;
         private readonly IJwtProvider _jwtProviderMock;
+        private readonly IUserService _userServiceMock;
         public AuthServiceTests()
         {
             _authRepositoryMock = Substitute.For<IAuthRepository>();
             _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _passwordHasherMock = Substitute.For<IPasswordHasher>();
             _jwtProviderMock = Substitute.For<IJwtProvider>();
-            _authService = new AuthService(_authRepositoryMock,_unitOfWorkMock,_passwordHasherMock, _jwtProviderMock);
+            _authService = new AuthService(_authRepositoryMock,_unitOfWorkMock,_passwordHasherMock, _jwtProviderMock, _userServiceMock);
         }
 
         [Fact]
