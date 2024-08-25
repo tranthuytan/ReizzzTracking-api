@@ -22,13 +22,16 @@ namespace ReizzzTracking.BL.Services.Utils.Authentication
             {
                 return;
             }
-            using IServiceScope scope = _serviceScopeFactory.CreateScope();
-            IUserService _permissionService = scope.ServiceProvider.GetRequiredService<IUserService>();
-            HashSet<string> permissions = await _permissionService.GetPermissionsAsync(parsedUserId);
-            if (permissions.Contains(requirement.Permission))
+            using (IServiceScope scope = _serviceScopeFactory.CreateScope())
             {
-                context.Succeed(requirement);
+                IUserService _permissionService = scope.ServiceProvider.GetRequiredService<IUserService>();
+                HashSet<string> permissions = await _permissionService.GetPermissionsAsync(parsedUserId);
+                if (permissions.Contains(requirement.Permission))
+                {
+                    context.Succeed(requirement);
+                }
             }
+            return;
         }
     }
 }
