@@ -23,20 +23,17 @@ namespace ReizzzTracking.BL.Services.AuthServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IJwtProvider _jwtProvider;
-        private readonly IUserService _userService;
-        public AuthService(IAuthRepository authRepository, IUnitOfWork unitOfWork, IPasswordHasher passwordHasher, IJwtProvider jwtProvider, IUserService userService)
+        public AuthService(IAuthRepository authRepository, IUnitOfWork unitOfWork, IPasswordHasher passwordHasher, IJwtProvider jwtProvider)
         {
             _authRepository = authRepository;
             _unitOfWork = unitOfWork;
             _passwordHasher = passwordHasher;
             _jwtProvider = jwtProvider;
-            _userService = userService;
         }
 
         public async Task<LoginResultViewModel> Login(UserLoginViewModel userLoginViewModel)
         {
             var result = new LoginResultViewModel();
-            var result1 = await _userService.GetPermissionsAsync(1);
             try
             {
                 var user = await _authRepository.FirstOrDefault(u=>u.Username== userLoginViewModel.LoginUsername || u.Email==userLoginViewModel.LoginUsername);
