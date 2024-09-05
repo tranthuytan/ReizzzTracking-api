@@ -12,7 +12,7 @@ using ReizzzTracking.DAL.Entities;
 using ReizzzTracking.DAL.Repositories.AuthRepository;
 using Xunit;
 
-namespace BAL.UnitTest.Auth
+namespace BL.UnitTest.Services
 {
     public class AuthServiceTests
     {
@@ -27,7 +27,7 @@ namespace BAL.UnitTest.Auth
             _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _passwordHasherMock = Substitute.For<IPasswordHasher>();
             _jwtProviderMock = Substitute.For<IJwtProvider>();
-            _authService = new AuthService(_authRepositoryMock,_unitOfWorkMock,_passwordHasherMock, _jwtProviderMock);
+            _authService = new AuthService(_authRepositoryMock, _unitOfWorkMock, _passwordHasherMock, _jwtProviderMock);
         }
 
         [Fact]

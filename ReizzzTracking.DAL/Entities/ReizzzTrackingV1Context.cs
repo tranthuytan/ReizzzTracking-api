@@ -44,19 +44,11 @@ public partial class ReizzzTrackingV1Context : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ReizzzTrackingV1Context).Assembly);
 
-        modelBuilder.Entity<CategoryType>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__category__3214EC07ADA88A03");
-
-            entity.ToTable("category_types");
-
-            entity.Property(e => e.Type).HasMaxLength(50);
-        });
 
         modelBuilder.Entity<Routine>(entity =>
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ReizzzTrackingV1Context).Assembly);
             entity.HasKey(e => e.Id).HasName("PK__routines__3214EC07877522F1");
 
             entity.ToTable("routines");
@@ -68,8 +60,12 @@ public partial class ReizzzTrackingV1Context : DbContext
                 .HasForeignKey(d => d.CategoryType)
                 .HasConstraintName("FK__routines__Catego__3D5E1FD2");
 
-            entity.HasOne(d => d.UsedByNavigation).WithMany(p => p.Routines)
-                .HasForeignKey(d => d.UsedBy)
+            entity.HasOne(r => r.RoutineCollectionNavigation).WithMany(rc => rc.Routines)
+                .HasForeignKey(r => r.RoutineCollectionId)
+                .HasConstraintName("FK__routines__routinecollections");
+
+            entity.HasOne(e => e.UsedByNavigation).WithMany(u=>u.Routines)
+                .HasForeignKey(e => e.UsedBy)
                 .HasConstraintName("FK__routines__UsedBy__3C69FB99");
         });
 
@@ -150,6 +146,7 @@ public partial class ReizzzTrackingV1Context : DbContext
             entity.Property(e => e.PhoneNumber).HasMaxLength(10);
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
             entity.Property(e => e.Username).HasMaxLength(50);
+
         });
 
         modelBuilder.Entity<UserRole>(entity =>

@@ -14,9 +14,9 @@ namespace ReizzzTracking.DAL.Primitives
         private static readonly Dictionary<long, TEnum> Enumerations = CreateEnumerations();
 
 
-        protected Enumeration(long value, string name)
+        protected Enumeration(long id, string name)
         {
-            Id = value;
+            Id = id;
             Name = name;
         }
         public long Id { get; protected init; }

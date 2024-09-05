@@ -12,5 +12,9 @@ namespace ReizzzTracking.DAL.Common.Enums
         ReadToDo = 2,
         UpdateToDo = 3,
         DeleteToDo = 4,
+        AddRoutine = 5,
+        ReadRoutine = 6,
+        UpdateRoutine = 7,
+        DeleteRoutine = 8,
     }
 }

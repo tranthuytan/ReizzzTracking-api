@@ -16,8 +16,10 @@ public partial class Routine
     public long? UsedBy { get; set; }
 
     public long? CategoryType { get; set; }
+    public long? RoutineCollectionId { get; set; }
 
     public virtual CategoryType? CategoryTypeNavigation { get; set; }
 
     public virtual User? UsedByNavigation { get; set; }
+    public virtual RoutineCollection? RoutineCollectionNavigation { get; set; }
 }

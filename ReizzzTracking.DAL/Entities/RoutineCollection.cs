@@ -14,4 +14,5 @@ public partial class RoutineCollection
     public bool? IsPublic { get; set; }
 
     public virtual User? CreatedByNavigation { get; set; }
+    public virtual ICollection<Routine>? Routines { get; set; }
 }

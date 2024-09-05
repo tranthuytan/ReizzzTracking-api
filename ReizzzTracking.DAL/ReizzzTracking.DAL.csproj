@@ -7,8 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\TaskRepository\" />
-    <Folder Include="Repositories\RoutineRepository\" />
+    <Compile Remove="Repositories\TaskRepository\**" />
+    <EmbeddedResource Remove="Repositories\TaskRepository\**" />
+    <None Remove="Repositories\TaskRepository\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repositories\UserTaskRepository\" />
   </ItemGroup>
 
   <ItemGroup>
