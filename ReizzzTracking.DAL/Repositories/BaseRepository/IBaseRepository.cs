@@ -15,15 +15,17 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
         public void RemoveAll(IEnumerable<TEntity> entities);
         public Task<TEntity?> Find(int id);
         public Task<TEntity?> FirstOrDefault(Expression<Func<TEntity, bool>>? expression = null, Func<IQueryable<TEntity>, IQueryable<TEntity>>? includeFunc = null);
-        public Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>>? expression = null, Func<IQueryable<TEntity>, IQueryable<TEntity>>? includeFunc = null);
+        public Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>>? expression = null, 
+                                                    Func<IQueryable<TEntity>, IQueryable<TEntity>>? includeFunc = null,
+                                                    int? take = null);
         public Task<(int, IEnumerable<TEntity>)> Pagination(int page = 1,
-                                                                   int pageSize = 10,
-                                                                   Expression<Func<TEntity, bool>>? expression = null,
-                                                                   Func<IQueryable<TEntity>, IQueryable<TEntity>>? includeFunc = null,
-                                                                   PaginationFilter<TEntity>? filterList = null,
-                                                                   string? orderByProperty = null,
-                                                                   bool descending = false
-                                                                   );
+                                                            int pageSize = 10,
+                                                            Expression<Func<TEntity, bool>>? expression = null,
+                                                            Func<IQueryable<TEntity>, IQueryable<TEntity>>? includeFunc = null,
+                                                            PaginationFilter<TEntity>? filterList = null,
+                                                            string[]? orderByProperty = null,
+                                                            bool[]? descending = null
+                                                            );
 
     }
 }

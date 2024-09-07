@@ -11,5 +11,7 @@ namespace ReizzzTracking.BL.Services.RoutineServices
     public interface IRoutineService
     {
         public Task<ResultViewModel> AddRoutine(RoutineAddViewModel routineVM);
+        public Task<ResultViewModel> UpdateRoutine(RoutineAddViewModel routineVM);
+
     }
 }

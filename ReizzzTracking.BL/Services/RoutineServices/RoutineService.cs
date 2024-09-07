@@ -71,5 +71,10 @@ namespace ReizzzTracking.BL.Services.RoutineServices
             }
             return result;
         }
+
+        public Task<ResultViewModel> UpdateRoutine(RoutineAddViewModel routineVM)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

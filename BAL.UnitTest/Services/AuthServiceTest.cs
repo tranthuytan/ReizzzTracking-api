@@ -14,14 +14,14 @@ using Xunit;
 
 namespace BL.UnitTest.Services
 {
-    public class AuthServiceTests
+    public class AuthServiceTest
     {
         private readonly IAuthRepository _authRepositoryMock;
         private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IPasswordHasher _passwordHasherMock;
         private readonly IAuthService _authService;
         private readonly IJwtProvider _jwtProviderMock;
-        public AuthServiceTests()
+        public AuthServiceTest()
         {
             _authRepositoryMock = Substitute.For<IAuthRepository>();
             _unitOfWorkMock = Substitute.For<IUnitOfWork>();

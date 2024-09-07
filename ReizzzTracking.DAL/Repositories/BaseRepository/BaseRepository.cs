@@ -43,7 +43,9 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>>? expression = null, Func<IQueryable<TEntity>, IQueryable<TEntity>>? includeFunc = null)
+        public async Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>>? expression = null,
+                                                        Func<IQueryable<TEntity>, IQueryable<TEntity>>? includeFunc = null,
+                                                        int? take = null)
         {
             IQueryable<TEntity> query = _dbSet;
 
@@ -55,6 +57,10 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
             if (includeFunc != null)
             {
                 query = includeFunc(query);
+            }
+            if (take != null)
+            {
+                query = query.Take(take ?? default(int));
             }
 
             return await query.ToListAsync();
@@ -74,15 +80,20 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
             _context.SaveChanges();
 
         }
-        public async Task<(int, IEnumerable<TEntity>)> Pagination(int page = 1,
+        public async Task<(int, IEnumerable<TEntity>)> Pagination(
+                                                                   int page = 1,
                                                                    int pageSize = 10,
                                                                    Expression<Func<TEntity, bool>>? expression = null,
                                                                    Func<IQueryable<TEntity>, IQueryable<TEntity>>? includeFunc = null,
                                                                    PaginationFilter<TEntity>? filterList = null,
-                                                                   string? orderByProperty = null,
-                                                                   bool descending = false
+                                                                   string[]? orderByProperty = null,
+                                                                   bool[]? descending = null
                                                                    )
         {
+            if (descending != null && orderByProperty != null && (descending.Length != orderByProperty.Length))
+            {
+                throw new ArgumentException("desceding's Length and orderByPropery's Length must be the same");
+            }
             IQueryable<TEntity> query = _dbSet;
 
             if (expression != null)
@@ -97,9 +108,14 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
             {
                 query = includeFunc(query);
             }
-            if (!string.IsNullOrEmpty(orderByProperty))
+            if (orderByProperty != null && orderByProperty.Any())
             {
-                query = ApplyOrderBy(query, orderByProperty, descending);
+                var orderedQuery = ApplyOrderBy(query, orderByProperty[0], descending[0]);
+                for (int i = 1; i < orderByProperty.Length; i++)
+                {
+                    orderedQuery = ThenApplyOrderBy(orderedQuery, orderByProperty[i], descending[i]);
+                }
+                query = orderedQuery;
             }
 
             var total = await query.CountAsync();
@@ -111,7 +127,7 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
 
             return (total, data);
         }
-        private IQueryable<TEntity> ApplyOrderBy(IQueryable<TEntity> query, string orderByProperty, bool descending = false)
+        private IOrderedQueryable<TEntity> ApplyOrderBy(IQueryable<TEntity> query, string orderByProperty, bool descending = false)
         {
             var entityType = typeof(TEntity);
             var property = entityType.GetProperty(orderByProperty);
@@ -125,13 +141,27 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
             var orderByExpression = Expression.Lambda(propertyAccess, parameter);
             if (descending)
             {
-                query = Queryable.OrderByDescending(query, (dynamic)orderByExpression);
+                return Queryable.OrderByDescending(query, (dynamic)orderByExpression);
             }
-            else
+            return Queryable.OrderBy(query, (dynamic)orderByExpression);
+        }
+        private IOrderedQueryable<TEntity> ThenApplyOrderBy(IOrderedQueryable<TEntity> query, string orderByProperty, bool descending = false)
+        {
+            var entityType = typeof(TEntity);
+            var property = entityType.GetProperty(orderByProperty);
+            if (property == null)
             {
-                query = Queryable.OrderBy(query, (dynamic)orderByExpression);
+                throw new ArgumentException($"{entityType} doesn't have property {orderByProperty}");
             }
-            return query;
+
+            var parameter = Expression.Parameter(typeof(TEntity), "x");
+            var propertyAccess = Expression.MakeMemberAccess(parameter, property);
+            var orderByExpression = Expression.Lambda(propertyAccess, parameter);
+            if (descending)
+            {
+                return query = Queryable.ThenByDescending(query, (dynamic)orderByExpression);
+            }
+            return query = Queryable.ThenBy(query, (dynamic)orderByExpression);
         }
     }
 }
