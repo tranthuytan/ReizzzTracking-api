@@ -101,7 +101,7 @@ namespace BL.UnitTest.Services
         [Fact]
         public async Task AddRoutineAsync_Should_ReturnError_WhenCanNotAccessUserClaim()
         {
-            //Arrangevar
+            //Arrange
             RoutineAddViewModel routineAddVM = new RoutineAddViewModel
             {
                 Name = "Test Routine",

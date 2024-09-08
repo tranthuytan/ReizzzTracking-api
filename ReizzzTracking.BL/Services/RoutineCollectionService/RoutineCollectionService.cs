@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace ReizzzTracking.BL.Services.RoutineCollectionService
 {
-    internal class RoutineCollectionService : IRoutineCollectionService
+    public class RoutineCollectionService : IRoutineCollectionService
     {
         private readonly IRoutineCollectionRepository _routineCollectionRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -51,6 +51,8 @@ namespace ReizzzTracking.BL.Services.RoutineCollectionService
             {
                 CurrentPage = request.CurrentPage,
                 PageSize = request.PageSize,
+                IsPaginated=request.IsPaginated,
+
             };
             result.PaginatedResult = resultData;
             try
