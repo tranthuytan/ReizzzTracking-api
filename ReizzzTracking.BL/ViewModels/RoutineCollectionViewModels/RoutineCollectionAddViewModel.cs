@@ -11,7 +11,7 @@ namespace ReizzzTracking.BL.ViewModels.RoutineCollectionViewModels
     {
         public long CreatedBy { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = "New Routine Collection";
 
         public bool IsPublic { get; set; }
         public RoutineCollection ToRoutineCollection(RoutineCollectionAddViewModel routineCollectionVM)

@@ -1,4 +1,5 @@
-﻿using ReizzzTracking.DAL.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using ReizzzTracking.DAL.Entities;
 using ReizzzTracking.DAL.Repositories.BaseRepository;
 using System;
 using System.Collections.Generic;

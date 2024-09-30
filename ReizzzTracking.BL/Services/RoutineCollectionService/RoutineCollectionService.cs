@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using ReizzzTracking.BL.Errors.Auth;
 using ReizzzTracking.BL.ViewModels.Common;
 using ReizzzTracking.BL.ViewModels.ResultViewModels;
 using ReizzzTracking.BL.ViewModels.ResultViewModels.RoutineCollectionViewModel;
@@ -9,6 +11,7 @@ using ReizzzTracking.DAL.Repositories.RoutineCollectionRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,11 +21,16 @@ namespace ReizzzTracking.BL.Services.RoutineCollectionService
     {
         private readonly IRoutineCollectionRepository _routineCollectionRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public RoutineCollectionService(IRoutineCollectionRepository routineCollectionRepository, IUnitOfWork unitOfWork)
+        public RoutineCollectionService(
+            IRoutineCollectionRepository routineCollectionRepository,
+            IUnitOfWork unitOfWork,
+            IHttpContextAccessor httpContextAccessor)
         {
             _routineCollectionRepository = routineCollectionRepository;
             _unitOfWork = unitOfWork;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<ResultViewModel> AddRoutineCollection(RoutineCollectionAddViewModel routineCollectionVM)
@@ -43,9 +51,10 @@ namespace ReizzzTracking.BL.Services.RoutineCollectionService
             return result;
         }
 
-        public async Task<RoutineCollectionGetResultViewModel> GetPaginatedRoutineCollection(GetRequestViewModel request)
+        public async Task<RoutineCollectionGetResultViewModel> GetPaginatedRoutineCollection(GetRoutineCollectionRequestViewModel request)
         {
             //Same user see their own routine collection
+
             RoutineCollectionGetResultViewModel result = new RoutineCollectionGetResultViewModel();
             PaginationGetViewModel<RoutineCollectionGetViewModel> resultData = new PaginationGetViewModel<RoutineCollectionGetViewModel>
             {
@@ -57,10 +66,16 @@ namespace ReizzzTracking.BL.Services.RoutineCollectionService
             result.PaginatedResult = resultData;
             try
             {
+                var requestorIdString = _httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                if (requestorIdString == null)
+                {
+                    throw new Exception(AuthError.UserClaimsAccessFailed);
+                }
+                long requestorId = long.Parse(requestorIdString);
                 (int, IEnumerable<RoutineCollection>) routineCollectionTuple = await _routineCollectionRepository.Pagination(
                                                                             request.CurrentPage,
                                                                             request.PageSize,
-                                                                            expression: rc => rc.CreatedBy == request.RequestedById,
+                                                                            expression: rc => rc.CreatedBy == requestorId,
                                                                             includeFunc: rc => rc.Include(rc => rc.CreatedByNavigation).Include(rc=>rc.Routines),
                                                                             null,
                                                                             [nameof(RoutineCollection.UpdatedAt),nameof(RoutineCollection.CreatedAt)],

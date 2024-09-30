@@ -1,6 +1,9 @@
-﻿using FluentAssertions;
+﻿using BL.UnitTest.Services.BaseServiceTest;
+using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
+using ReizzzTracking.BL.Errors.Auth;
 using ReizzzTracking.BL.Services.RoutineCollectionService;
 using ReizzzTracking.BL.ViewModels.Common;
 using ReizzzTracking.BL.ViewModels.ResultViewModels.RoutineCollectionViewModel;
@@ -13,31 +16,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace BL.UnitTest.Services
 {
-    public class RoutineCollectionTest
+    public class RoutineCollectionTest : HttpContextAccessorServiceTest
     {
         private readonly IRoutineCollectionRepository _routineCollectionRepositoryMock;
         private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IRoutineCollectionService _routineCollectionService;
-
         public RoutineCollectionTest()
         {
             _routineCollectionRepositoryMock = Substitute.For<IRoutineCollectionRepository>();
             _unitOfWorkMock = Substitute.For<IUnitOfWork>();
-            _routineCollectionService = new RoutineCollectionService(_routineCollectionRepositoryMock, _unitOfWorkMock);
+            _routineCollectionService = new RoutineCollectionService(_routineCollectionRepositoryMock, _unitOfWorkMock, _httpContextAccessorMock);
         }
         [Fact]
         public async Task GetPaginatedRoutineCollection_ReturnSuccess_WhenValid()
         {
             //Arrange
-            GetRequestViewModel request = new GetRequestViewModel
+            GetRoutineCollectionRequestViewModel request = new GetRoutineCollectionRequestViewModel
             {
-                RequestedById = 1,
                 IsPaginated = true,
                 PageSize = 20,
                 CurrentPage = 1
@@ -198,11 +200,27 @@ namespace BL.UnitTest.Services
                                                         Arg.Any<bool[]>())          //descending
                                             .Returns((listRoutineCollections.Count, listRoutineCollections));
 
+            _httpContextAccessorMock.HttpContext.Returns(new DefaultHttpContext { User = claimsPrincipal });
             //Act
             var actualRoutineCollections = await _routineCollectionService.GetPaginatedRoutineCollection(request);
 
             //Assert
             actualRoutineCollections.Should().BeEquivalentTo(expectedRoutineCollection);
+        }
+        [Fact]
+        public async Task GetPaginatedRoutineCollection_ReturnError_WhenCannotAccessUserClaim()
+        {
+            //Arrange
+            GetRoutineCollectionRequestViewModel request = new GetRoutineCollectionRequestViewModel
+            {
+                IsPaginated = true,
+                PageSize = 20,
+                CurrentPage = 1
+            };
+            //Act
+            var actualRoutineCollections = await _routineCollectionService.GetPaginatedRoutineCollection(request);
+            //Assert
+            actualRoutineCollections.Errors.Should().Contain(AuthError.UserClaimsAccessFailed);
         }
     }
 }

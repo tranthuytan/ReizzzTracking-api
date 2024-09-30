@@ -35,5 +35,18 @@ namespace ReizzzTracking.BL.ViewModels.RoutineViewModel
                 RoutineCollectionId = routine.RoutineCollectionId
             };
         }
+        public Routine ToRoutine(RoutineGetViewModel routineVM)
+        {
+            return new Routine
+            {
+                Id = routineVM.Id,
+                StartTime = routineVM.StartTime,
+                Name = routineVM.Name,
+                IsPublic = routineVM.IsPublic,
+                UsedBy = routineVM.UsedBy,
+                CategoryType = routineVM.CategoryType,
+                RoutineCollectionId = routineVM.RoutineCollectionId
+            };
+        }
     }
 }

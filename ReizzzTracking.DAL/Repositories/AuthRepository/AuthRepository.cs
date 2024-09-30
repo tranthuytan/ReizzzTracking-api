@@ -15,20 +15,20 @@ namespace ReizzzTracking.DAL.Repositories.AuthRepository
         {
         }
 
-        public async Task<User> GetUserByEmail(string email)
+        public async Task<User?> GetUserByEmail(string email)
         {
-            var result = _dbSet.FirstOrDefault(x => x.Email == email);
+            var result = await _dbSet.FirstOrDefaultAsync(x => x.Email == email);
             return result;
         }
-        public async Task<User> GetUserByUsername(string username)
+        public async Task<User?> GetUserByUsername(string username)
         {
-            var result = _dbSet.FirstOrDefault(x => x.Username == username);
+            var result = await _dbSet.FirstOrDefaultAsync(x => x.Username == username);
             return result;
         }
 
-        public async Task<User> Login(string loginUsername, string password)
+        public async Task<User?> Login(string loginUsername, string password)
         {
-            var result = _dbSet.FirstOrDefault(u => (u.Username == loginUsername || u.Email == loginUsername) && u.Password == password);
+            var result = await _dbSet.FirstOrDefaultAsync(u => (u.Username == loginUsername || u.Email == loginUsername) && u.Password == password);
             return result;
         }
     }

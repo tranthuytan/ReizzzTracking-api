@@ -24,7 +24,7 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
             _dbSet.Add(entity);
         }
 
-        public async Task<TEntity?> Find(int id)
+        public async Task<TEntity?> Find(long id)
         {
             return await _dbSet.FindAsync(id);
         }
@@ -45,6 +45,9 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
 
         public async Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>>? expression = null,
                                                         Func<IQueryable<TEntity>, IQueryable<TEntity>>? includeFunc = null,
+                                                        PaginationFilter<TEntity>? filterList = null,
+                                                        string[]? orderByProperty = null,
+                                                        bool[]? descending = null,
                                                         int? take = null)
         {
             IQueryable<TEntity> query = _dbSet;
@@ -63,22 +66,30 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
                 query = query.Take(take ?? default(int));
             }
 
+            if (orderByProperty != null && orderByProperty.Any())
+            {
+                var orderedQuery = ApplyOrderBy(query, orderByProperty[0], descending[0]);
+                for (int i = 1; i < orderByProperty.Length; i++)
+                {
+                    orderedQuery = ThenApplyOrderBy(orderedQuery, orderByProperty[i], descending[i]);
+                }
+                query = orderedQuery;
+            }
+
             return await query.ToListAsync();
         }
         public void Remove(TEntity entity)
         {
             _dbSet.Remove(entity);
         }
-        public void RemoveAll(IEnumerable<TEntity> entities)
-        {
-            _dbSet.RemoveRange(entities);
-        }
-        public void Update(TEntity entity)
+        public void Update(TEntity entity, params Expression<Func<TEntity, object>>[] propertiesToIgnore)
         {
             var tracker = _context.Attach(entity);
             tracker.State = EntityState.Modified;
-            _context.SaveChanges();
-
+            foreach (var property in propertiesToIgnore)
+            {
+                _context.Entry(entity).Property(property).IsModified = false;
+            }
         }
         public async Task<(int, IEnumerable<TEntity>)> Pagination(
                                                                    int page = 1,

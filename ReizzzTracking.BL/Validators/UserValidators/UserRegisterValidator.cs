@@ -8,39 +8,39 @@ namespace ReizzzTracking.BL.Validators.UserValidators
         public UserRegisterValidator()
         {
             RuleFor(u => u.Username)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage("Please enter a {PropertyName}")
-                .NotNull().WithMessage("Please enter a {PropertyName}")
+                .Cascade(CascadeMode.Stop)
+                .NotEmpty()
+                .NotNull()
                 .Length(4, 20);
 
             RuleFor(u => u.Password)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage("Please enter a {PropertyName}")
-                .NotNull().WithMessage("Please enter a {PropertyName}")
+                .Cascade(CascadeMode.Stop)
+                .NotEmpty()
+                .NotNull()
                 .Length(4, 20);
 
             RuleFor(u => u.Name)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage("Please enter a {PropertyName}")
-                .NotNull().WithMessage("Please enter a {PropertyName}")
+                .Cascade(CascadeMode.Stop)
+                .NotEmpty()
+                .NotNull()
                 .Length(2,50);
 
             RuleFor(u => u.PhoneNumber)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage("Please enter a {PropertyName}")
-                .NotNull().WithMessage("Please enter a {PropertyName}")
-                .Length(9,10).WithMessage("{PropertyName} must have {MinLength} or {MaxLength} characters");
+                .Cascade(CascadeMode.Stop)
+                .NotEmpty()
+                .NotNull()
+                .Length(9,10);
 
-            //RuleFor(u => u.Gender)
-            //    .Cascade(CascadeMode.StopOnFirstFailure)
-            //    .NotEmpty().WithMessage("Please enter a {PropertyName}")
-            //    .NotNull().WithMessage("Please enter a {PropertyName}")
-            //    .ExclusiveBetween(0,2);
+            RuleFor(u => u.Gender)
+                .Cascade(CascadeMode.Stop)
+                .NotEmpty()
+                .NotNull()
+                .ExclusiveBetween((byte)0,(byte)2);
 
             RuleFor(u => u.Birthday)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage("Please enter a {PropertyName}")
-                .NotNull().WithMessage("Please enter a {PropertyName}");
+                .Cascade(CascadeMode.Stop)
+                .NotEmpty()
+                .NotNull();
         }
     }
 }

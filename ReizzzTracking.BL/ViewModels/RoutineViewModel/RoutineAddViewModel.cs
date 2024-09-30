@@ -9,8 +9,8 @@ namespace ReizzzTracking.BL.ViewModels.RoutineViewModel
 {
     public class RoutineAddViewModel
     {
-        public string Name { get; set; }
-        public string StartTimeString { get; set; }
+        public string Name { get; set; } = "";
+        public string StartTimeString { get; set; } = "";
         public bool IsPublic { get; set; }
         public long CategoryTypeId { get; set; }
         public long? RoutineCollectionId { get; set; }

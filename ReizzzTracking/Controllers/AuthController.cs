@@ -10,7 +10,7 @@ using ReizzzTracking.DAL.Entities;
 
 namespace ReizzzTracking.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -19,7 +19,7 @@ namespace ReizzzTracking.Controllers
         {
             _authService = authService;
         }
-        [HttpPost("Register")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]UserRegisterViewModel userAddVM)
         {
             var result = new ResultViewModel();
@@ -40,7 +40,7 @@ namespace ReizzzTracking.Controllers
             result = await _authService.Register(userAddVM);
             return Ok(result);
         }
-        [HttpPost("Login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody]UserLoginViewModel userAddVM)
         {
             var result = new LoginResultViewModel();

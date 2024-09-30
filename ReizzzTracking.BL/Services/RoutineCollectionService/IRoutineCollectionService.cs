@@ -13,6 +13,6 @@ namespace ReizzzTracking.BL.Services.RoutineCollectionService
     public interface IRoutineCollectionService
     {
         public Task<ResultViewModel> AddRoutineCollection(RoutineCollectionAddViewModel routineCollectionVM);
-        public Task<RoutineCollectionGetResultViewModel> GetPaginatedRoutineCollection(GetRequestViewModel request);
+        public Task<RoutineCollectionGetResultViewModel> GetPaginatedRoutineCollection(GetRoutineCollectionRequestViewModel request);
     }
 }

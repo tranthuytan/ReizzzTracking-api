@@ -11,8 +11,6 @@ namespace ReizzzTracking.BL.ViewModels.Common
     /// </summary>
     public class GetRequestViewModel
     {
-        //Send request user's Id 
-        public long? RequestedById { get; set; }
         public bool IsPaginated { get; set; }
         public int PageSize { get; set; } = 20;
         public int CurrentPage { get; set; } = 1;
