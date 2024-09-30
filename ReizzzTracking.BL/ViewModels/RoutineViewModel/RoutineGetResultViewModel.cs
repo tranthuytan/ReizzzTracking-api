@@ -1,12 +1,12 @@
 ﻿using ReizzzTracking.BL.ViewModels.Common;
-using ReizzzTracking.BL.ViewModels.RoutineViewModel;
+using ReizzzTracking.BL.ViewModels.ResultViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReizzzTracking.BL.ViewModels.ResultViewModels.RoutineViewModel
+namespace ReizzzTracking.BL.ViewModels.RoutineViewModel
 {
     public class RoutineGetResultViewModel : ResultViewModel
     {

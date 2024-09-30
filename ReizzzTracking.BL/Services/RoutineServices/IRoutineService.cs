@@ -1,8 +1,6 @@
 ﻿using ReizzzTracking.BL.ViewModels.Common;
 using ReizzzTracking.BL.ViewModels.ResultViewModels;
 using ReizzzTracking.BL.ViewModels.ResultViewModels.RoutineCollectionViewModel;
-using ReizzzTracking.BL.ViewModels.ResultViewModels.RoutineViewModel;
-using ReizzzTracking.BL.ViewModels.RoutineCollectionViewModels;
 using ReizzzTracking.BL.ViewModels.RoutineViewModel;
 using System;
 using System.Collections.Generic;

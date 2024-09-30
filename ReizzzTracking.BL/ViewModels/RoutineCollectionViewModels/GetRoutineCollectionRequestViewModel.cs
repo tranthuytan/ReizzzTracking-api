@@ -10,8 +10,8 @@ namespace ReizzzTracking.BL.ViewModels.RoutineCollectionViewModels
     /// <summary>
     /// Handle all the HttpGet method requests
     /// </summary>
-    public class GetRoutineRequestViewModel : GetRequestViewModel
+    public class GetRoutineCollectionRequestViewModel : GetRequestViewModel
     {
-        public long RoutineCollectionId { get; set; }
+
     }
 }

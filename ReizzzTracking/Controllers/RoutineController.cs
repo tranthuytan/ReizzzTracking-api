@@ -5,7 +5,6 @@ using ReizzzTracking.BL.Services.RoutineServices;
 using ReizzzTracking.BL.Services.Utils.Authentication;
 using ReizzzTracking.BL.Validators.RoutineValidators;
 using ReizzzTracking.BL.ViewModels.ResultViewModels;
-using ReizzzTracking.BL.ViewModels.RoutineCollectionViewModels;
 using ReizzzTracking.BL.ViewModels.RoutineViewModel;
 
 namespace ReizzzTracking.Controllers

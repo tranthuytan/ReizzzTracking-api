@@ -16,7 +16,6 @@ namespace ReizzzTracking.BL.ViewModels.RoutineViewModel
         public long? RoutineCollectionId { get; set; }
         public Routine ToRoutine(RoutineAddViewModel routineVM)
         {
-            //TODO: bring this to the validator
             //format to HH:MM format
             if (routineVM.StartTimeString.Trim()[1].Equals(":"))
             {

@@ -4,8 +4,6 @@ using ReizzzTracking.BL.Errors.Common;
 using ReizzzTracking.BL.ViewModels.Common;
 using ReizzzTracking.BL.ViewModels.ResultViewModels;
 using ReizzzTracking.BL.ViewModels.ResultViewModels.RoutineCollectionViewModel;
-using ReizzzTracking.BL.ViewModels.ResultViewModels.RoutineViewModel;
-using ReizzzTracking.BL.ViewModels.RoutineCollectionViewModels;
 using ReizzzTracking.BL.ViewModels.RoutineViewModel;
 using ReizzzTracking.DAL.Common.UnitOfWork;
 using ReizzzTracking.DAL.Entities;

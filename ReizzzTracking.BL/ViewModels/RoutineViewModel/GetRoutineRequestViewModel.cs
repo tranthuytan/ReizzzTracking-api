@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReizzzTracking.BL.ViewModels.ResultViewModels.RoutineCollectionViewModel
+namespace ReizzzTracking.BL.ViewModels.RoutineViewModel
 {
     /// <summary>
     /// Handle all the HttpGet method requests
     /// </summary>
-    public class GetRoutineCollectionRequestViewModel : GetRequestViewModel
+    public class GetRoutineRequestViewModel : GetRequestViewModel
     {
-
+        public long RoutineCollectionId { get; set; }
     }
 }
