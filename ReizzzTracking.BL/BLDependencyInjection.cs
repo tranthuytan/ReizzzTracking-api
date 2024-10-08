@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ReizzzTracking.BL.Services.AuthServices;
 using ReizzzTracking.BL.Services.PermissionService;
-using ReizzzTracking.BL.Services.RoutineCollectionService;
+using ReizzzTracking.BL.Services.RoutineCollectionServices;
 using ReizzzTracking.BL.Services.RoutineServices;
-using ReizzzTracking.BL.Services.UserTaskServices;
+using ReizzzTracking.BL.Services.TodoScheduleServices;
 using ReizzzTracking.BL.Services.Utils.Authentication;
 using ReizzzTracking.BL.Utils.PasswordHasher;
 using System;
@@ -29,7 +29,7 @@ public static class BLDependencyInjection
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IRoutineService, RoutineService>();
         services.AddScoped<IRoutineCollectionService, RoutineCollectionService>();
-        services.AddScoped<IUserTaskService, UserTaskService>();
+        services.AddScoped<ITodoScheduleService, TodoScheduleService>();
         services.AddHttpContextAccessor();
 
     }

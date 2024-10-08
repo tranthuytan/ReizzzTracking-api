@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReizzzTracking.DAL.Entities;
 
@@ -11,9 +12,11 @@ using ReizzzTracking.DAL.Entities;
 namespace ReizzzTracking.DAL.Migrations
 {
     [DbContext(typeof(ReizzzTrackingV1Context))]
-    partial class ReizzzTrackingV1ContextModelSnapshot : ModelSnapshot
+    [Migration("20241008183610_Update_ActualTime_TodoSchedule")]
+    partial class Update_ActualTime_TodoSchedule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

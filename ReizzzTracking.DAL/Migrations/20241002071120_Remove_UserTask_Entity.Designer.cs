@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReizzzTracking.DAL.Entities;
 
@@ -11,9 +12,11 @@ using ReizzzTracking.DAL.Entities;
 namespace ReizzzTracking.DAL.Migrations
 {
     [DbContext(typeof(ReizzzTrackingV1Context))]
-    partial class ReizzzTrackingV1ContextModelSnapshot : ModelSnapshot
+    [Migration("20241002071120_Remove_UserTask_Entity")]
+    partial class Remove_UserTask_Entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -252,7 +255,7 @@ namespace ReizzzTracking.DAL.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<decimal?>("Multiplier")
-                        .HasColumnType("decimal(18, 10)");
+                        .HasColumnType("decimal(5, 2)");
 
                     b.Property<long?>("ToUnitId")
                         .HasColumnType("bigint");
@@ -265,50 +268,6 @@ namespace ReizzzTracking.DAL.Migrations
                     b.HasIndex("ToUnitId");
 
                     b.ToTable("time_exchanges", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            FromUnitId = 1L,
-                            Multiplier = 0.0166666666666666666666666667m,
-                            ToUnitId = 2L
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            FromUnitId = 1L,
-                            Multiplier = 0.0002777777777777777777777778m,
-                            ToUnitId = 3L
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            FromUnitId = 2L,
-                            Multiplier = 60m,
-                            ToUnitId = 1L
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            FromUnitId = 2L,
-                            Multiplier = 0.0166666666666666666666666667m,
-                            ToUnitId = 3L
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            FromUnitId = 3L,
-                            Multiplier = 3600m,
-                            ToUnitId = 1L
-                        },
-                        new
-                        {
-                            Id = 6L,
-                            FromUnitId = 3L,
-                            Multiplier = 60m,
-                            ToUnitId = 2L
-                        });
                 });
 
             modelBuilder.Entity("ReizzzTracking.DAL.Entities.TimeUnit", b =>
@@ -319,31 +278,13 @@ namespace ReizzzTracking.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<DateTime?>("Name")
+                        .HasColumnType("datetime");
 
                     b.HasKey("Id")
                         .HasName("PK__time_uni__3214EC0723133C3F");
 
                     b.ToTable("time_units", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Name = "Second"
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            Name = "Minute"
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            Name = "Hour"
-                        });
                 });
 
             modelBuilder.Entity("ReizzzTracking.DAL.Entities.TodoSchedule", b =>
@@ -354,8 +295,8 @@ namespace ReizzzTracking.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<decimal?>("ActualTime")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int?>("ActualTime")
+                        .HasColumnType("int");
 
                     b.Property<long?>("AppliedFor")
                         .HasColumnType("bigint");
@@ -371,10 +312,6 @@ namespace ReizzzTracking.DAL.Migrations
 
                     b.Property<bool?>("IsDone")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("StartAt")
                         .HasColumnType("datetime");

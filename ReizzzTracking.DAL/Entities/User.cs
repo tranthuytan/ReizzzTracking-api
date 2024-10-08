@@ -39,5 +39,4 @@ public partial class User
 
     public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
 
-    public virtual ICollection<UserTask> UserTasks { get; set; } = new List<UserTask>();
 }

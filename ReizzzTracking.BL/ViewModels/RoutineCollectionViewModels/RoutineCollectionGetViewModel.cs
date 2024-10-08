@@ -35,7 +35,7 @@ namespace ReizzzTracking.BL.ViewModels.RoutineCollectionViewModels
                 CreatedAt = routineCollection.CreatedAt,
                 UpdatedAt = routineCollection.UpdatedAt
             };
-            if (routineCollection.Routines!=null && routineCollection.Routines.Any())
+            if (routineCollection.Routines != null && routineCollection.Routines.Any())
             {
                 result.Routines = new List<RoutineGetViewModel>();
                 foreach (var routine in routineCollection.Routines)

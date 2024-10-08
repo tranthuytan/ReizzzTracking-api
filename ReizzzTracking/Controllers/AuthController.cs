@@ -10,7 +10,7 @@ using ReizzzTracking.DAL.Entities;
 
 namespace ReizzzTracking.Controllers
 {
-    [Route("api/")]
+    [Route("api/auth/")]
     [ApiController]
     public class AuthController : ControllerBase
     {

@@ -9,7 +9,7 @@ using ReizzzTracking.BL.ViewModels.RoutineViewModel;
 
 namespace ReizzzTracking.Controllers
 {
-    [Route("api/")]
+    [Route("api/routines/")]
     [ApiController]
     public class RoutineController : ControllerBase
     {
@@ -19,7 +19,7 @@ namespace ReizzzTracking.Controllers
         {
             _routineService = routinService;
         }
-        [HttpPost("routines")]
+        [HttpPost()]
         [HasPermission(DAL.Common.Enums.Permission.AddRoutine)]
         public async Task<IActionResult> AddRoutine(RoutineAddViewModel routineVM)
         {
@@ -42,7 +42,7 @@ namespace ReizzzTracking.Controllers
             }
             return BadRequest(result);
         }
-        [HttpGet("routines/{routine_id}")]
+        [HttpGet("{routine_id}")]
         [HasPermission(DAL.Common.Enums.Permission.ReadRoutine)]
         public async Task<IActionResult> GetRoutineById([FromQuery] long routine_id)
         {
@@ -53,7 +53,7 @@ namespace ReizzzTracking.Controllers
             }
             return BadRequest(result);
         }
-        [HttpGet("routines")]
+        [HttpGet()]
         [HasPermission(DAL.Common.Enums.Permission.ReadRoutine)]
         public async Task<IActionResult> GetRoutines([FromQuery] GetRoutineRequestViewModel request)
         {
@@ -64,7 +64,7 @@ namespace ReizzzTracking.Controllers
             }
             return BadRequest(result);
         }
-        [HttpPut("routines")]
+        [HttpPut()]
         [HasPermission(DAL.Common.Enums.Permission.UpdateRoutine)]
         public async Task<IActionResult> UpdateRoutine([FromBody] RoutineUpdateViewModel[] routinesVM)
         {
@@ -90,7 +90,7 @@ namespace ReizzzTracking.Controllers
                 return Ok(result);
             return BadRequest(result);
         }
-        [HttpPut("routines/{routine_id}")]
+        [HttpPut("{routine_id}")]
         [HasPermission(DAL.Common.Enums.Permission.UpdateRoutine)]
         public async Task<IActionResult> UpdateRoutineById([FromQuery]long routine_id, [FromBody] RoutineUpdateViewModel routineVM)
         {
@@ -115,7 +115,7 @@ namespace ReizzzTracking.Controllers
                 return Ok(result);
             return BadRequest(result);
         }
-        [HttpDelete("routines")]
+        [HttpDelete()]
         [HasPermission(DAL.Common.Enums.Permission.DeleteRoutine)]
         public async Task<IActionResult> DeleteRoutines([FromQuery] long[] ids)
         {
@@ -125,7 +125,7 @@ namespace ReizzzTracking.Controllers
                 return Ok(result);
             return NotFound(result);
         }
-        [HttpDelete("routines/{routine_id}")]
+        [HttpDelete("{routine_id}")]
         [HasPermission(DAL.Common.Enums.Permission.DeleteRoutine)]
         public async Task<IActionResult> DeleteRoutines(long routine_id)
         {

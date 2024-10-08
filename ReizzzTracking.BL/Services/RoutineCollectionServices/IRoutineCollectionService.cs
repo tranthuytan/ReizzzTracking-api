@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReizzzTracking.BL.Services.RoutineCollectionService
+namespace ReizzzTracking.BL.Services.RoutineCollectionServices
 {
     public interface IRoutineCollectionService
     {

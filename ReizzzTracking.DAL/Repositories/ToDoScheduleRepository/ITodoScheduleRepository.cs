@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReizzzTracking.DAL.Repositories.UserTaskRepository
+namespace ReizzzTracking.DAL.Repositories.TodoScheduleRepository
 {
-    public interface IUserTaskRepository : IBaseRepository<UserTask>
+    public interface ITodoScheduleRepository : IBaseRepository<TodoSchedule>
     {
     }
 }

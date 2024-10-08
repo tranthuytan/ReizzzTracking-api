@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using ReizzzTracking.BL.Errors.Auth;
-using ReizzzTracking.BL.Services.RoutineCollectionService;
+using ReizzzTracking.BL.Services.RoutineCollectionServices;
 using ReizzzTracking.BL.ViewModels.Common;
 using ReizzzTracking.BL.ViewModels.ResultViewModels.RoutineCollectionViewModel;
 using ReizzzTracking.BL.ViewModels.RoutineCollectionViewModels;
@@ -23,12 +23,12 @@ using Xunit;
 
 namespace BL.UnitTest.Services
 {
-    public class RoutineCollectionTest : HttpContextAccessorServiceTest
+    public class RoutineCollectionServiceTest : HttpContextAccessorServiceTest
     {
         private readonly IRoutineCollectionRepository _routineCollectionRepositoryMock;
         private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IRoutineCollectionService _routineCollectionService;
-        public RoutineCollectionTest()
+        public RoutineCollectionServiceTest()
         {
             _routineCollectionRepositoryMock = Substitute.For<IRoutineCollectionRepository>();
             _unitOfWorkMock = Substitute.For<IUnitOfWork>();

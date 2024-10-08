@@ -15,7 +15,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReizzzTracking.BL.Services.RoutineCollectionService
+namespace ReizzzTracking.BL.Services.RoutineCollectionServices
 {
     public class RoutineCollectionService : IRoutineCollectionService
     {

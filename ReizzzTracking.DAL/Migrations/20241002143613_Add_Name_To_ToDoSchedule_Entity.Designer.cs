@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReizzzTracking.DAL.Entities;
 
@@ -11,9 +12,11 @@ using ReizzzTracking.DAL.Entities;
 namespace ReizzzTracking.DAL.Migrations
 {
     [DbContext(typeof(ReizzzTrackingV1Context))]
-    partial class ReizzzTrackingV1ContextModelSnapshot : ModelSnapshot
+    [Migration("20241002143613_Add_Name_To_ToDoSchedule_Entity")]
+    partial class Add_Name_To_ToDoSchedule_Entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -354,8 +357,8 @@ namespace ReizzzTracking.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<decimal?>("ActualTime")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int?>("ActualTime")
+                        .HasColumnType("int");
 
                     b.Property<long?>("AppliedFor")
                         .HasColumnType("bigint");

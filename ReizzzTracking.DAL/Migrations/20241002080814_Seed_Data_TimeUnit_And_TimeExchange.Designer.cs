@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReizzzTracking.DAL.Entities;
 
@@ -11,9 +12,11 @@ using ReizzzTracking.DAL.Entities;
 namespace ReizzzTracking.DAL.Migrations
 {
     [DbContext(typeof(ReizzzTrackingV1Context))]
-    partial class ReizzzTrackingV1ContextModelSnapshot : ModelSnapshot
+    [Migration("20241002080814_Seed_Data_TimeUnit_And_TimeExchange")]
+    partial class Seed_Data_TimeUnit_And_TimeExchange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -354,8 +357,8 @@ namespace ReizzzTracking.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<decimal?>("ActualTime")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int?>("ActualTime")
+                        .HasColumnType("int");
 
                     b.Property<long?>("AppliedFor")
                         .HasColumnType("bigint");
@@ -371,10 +374,6 @@ namespace ReizzzTracking.DAL.Migrations
 
                     b.Property<bool?>("IsDone")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("StartAt")
                         .HasColumnType("datetime");
