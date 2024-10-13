@@ -12,6 +12,7 @@ using ReizzzTracking.DAL.Common.UnitOfWork;
 using ReizzzTracking.DAL.Entities;
 using ReizzzTracking.DAL.Repositories.BaseRepository;
 using ReizzzTracking.DAL.Repositories.RoutineCollectionRepository;
+using ReizzzTracking.DAL.Repositories.RoutineRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,11 +29,13 @@ namespace BL.UnitTest.Services
         private readonly IRoutineCollectionRepository _routineCollectionRepositoryMock;
         private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IRoutineCollectionService _routineCollectionService;
+        private readonly IRoutineRepository _routineRepository;
         public RoutineCollectionServiceTest()
         {
             _routineCollectionRepositoryMock = Substitute.For<IRoutineCollectionRepository>();
             _unitOfWorkMock = Substitute.For<IUnitOfWork>();
-            _routineCollectionService = new RoutineCollectionService(_routineCollectionRepositoryMock, _unitOfWorkMock, _httpContextAccessorMock);
+            _routineRepository = Substitute.For<IRoutineRepository>();
+            _routineCollectionService = new RoutineCollectionService(_routineCollectionRepositoryMock, _unitOfWorkMock, _httpContextAccessorMock,_routineRepository);
         }
         [Fact]
         public async Task GetPaginatedRoutineCollection_ReturnSuccess_WhenValid()

@@ -61,7 +61,8 @@ public partial class ReizzzTrackingV1Context : DbContext
 
             entity.HasOne(r => r.RoutineCollectionNavigation).WithMany(rc => rc.Routines)
                 .HasForeignKey(r => r.RoutineCollectionId)
-                .HasConstraintName("FK__routines__routinecollections");
+                .HasConstraintName("FK__routines__routinecollections")
+                .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(e => e.UsedByNavigation).WithMany(u=>u.Routines)
                 .HasForeignKey(e => e.UsedBy)
@@ -79,6 +80,7 @@ public partial class ReizzzTrackingV1Context : DbContext
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.RoutineCollections)
                 .HasForeignKey(d => d.CreatedBy)
                 .HasConstraintName("FK__routine_c__Creat__3A81B327");
+
         });
 
         modelBuilder.Entity<TodoSchedule>(entity =>

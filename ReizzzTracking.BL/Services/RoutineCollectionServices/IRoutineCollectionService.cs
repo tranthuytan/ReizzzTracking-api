@@ -13,5 +13,8 @@ namespace ReizzzTracking.BL.Services.RoutineCollectionServices
     {
         public Task<ResultViewModel> AddRoutineCollection(RoutineCollectionAddViewModel routineCollectionVM);
         public Task<RoutineCollectionGetResultViewModel> GetPaginatedRoutineCollection(GetRoutineCollectionRequestViewModel request);
+        public Task<RoutineCollectionGetResultViewModel> GetRoutineCollectionById(long id);
+        public Task<ResultViewModel> UpdateRoutineCollection(RoutineCollectionUpdateViewModel routineCollectionVM);
+        public Task<ResultViewModel> DeleteRoutineCollectionById(long id);
     }
 }

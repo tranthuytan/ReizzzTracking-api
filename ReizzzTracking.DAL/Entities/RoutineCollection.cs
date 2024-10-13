@@ -14,7 +14,7 @@ public partial class RoutineCollection
 
     public bool? IsPublic { get; set; }
     public long CopyCount { get; set; }
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime? UpdatedAt { get; set; }
     public virtual User? CreatedByNavigation { get; set; }
     public virtual ICollection<Routine>? Routines { get; set; }
