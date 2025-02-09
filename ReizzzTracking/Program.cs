@@ -6,6 +6,7 @@ using ReizzzTracking.BL.Services.Utils.Authentication;
 using ReizzzTracking.DAL.Common.DbFactory;
 using ReizzzTracking.DAL.Common.UnitOfWork;
 using ReizzzTracking.DAL.Repositories.AuthRepository;
+using ReizzzTracking.Extensions;
 using ReizzzTracking.OptionsSetup;
 using System.Text;
 
@@ -22,6 +23,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+#region Add Jwt
 //add jwt
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer((options =>
 {
@@ -40,6 +42,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 }));
 builder.Services.ConfigureOptions<JwtOptionsSetup>();
 builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
+#endregion
 
 //authorization
 builder.Services.AddAuthorization();
@@ -81,6 +84,9 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    //apply migration
+    app.ApplyMigrations();
 }
 
 app.UseHttpsRedirection();

@@ -48,7 +48,7 @@ namespace BL.UnitTest.Services
                 StartTime = "6:30",
                 Name = "Test Routine",
                 IsPublic = true,
-                UsedBy = 1,
+                CreatedBy = 1,
                 CategoryType = 1,
                 RoutineCollectionId = 1,
             };
@@ -88,7 +88,7 @@ namespace BL.UnitTest.Services
                 StartTime = "6:30",
                 Name = "Test Routine",
                 IsPublic = true,
-                UsedBy = 1,
+                CreatedBy = 1,
                 CategoryType = 1,
                 RoutineCollectionId = 1,
             };
@@ -121,7 +121,7 @@ namespace BL.UnitTest.Services
                         StartTime = "06:30",
                         Name = "Test Routine",
                         IsPublic = true,
-                        UsedBy = 1,
+                        CreatedBy = 1,
                         CategoryType = 1,
                         RoutineCollectionId = 1,
                     },
@@ -131,7 +131,7 @@ namespace BL.UnitTest.Services
                         StartTime = "06:40",
                         Name = "Test Routine",
                         IsPublic = true,
-                        UsedBy = 1,
+                        CreatedBy = 1,
                         CategoryType = 1,
                         RoutineCollectionId = 1,
                     }
@@ -153,7 +153,7 @@ namespace BL.UnitTest.Services
                                 StartTime="06:30",
                                 Name="Test Routine",
                                 IsPublic=true,
-                                UsedBy=1,
+                                CreatedBy=1,
                                 CategoryType=1,
                                 RoutineCollectionId=1,
                             },
@@ -163,7 +163,7 @@ namespace BL.UnitTest.Services
                                 StartTime = "06:40",
                                 Name = "Test Routine",
                                 IsPublic = true,
-                                UsedBy = 1,
+                                CreatedBy = 1,
                                 CategoryType = 1,
                                 RoutineCollectionId = 1,
                             }
@@ -283,7 +283,7 @@ namespace BL.UnitTest.Services
                 StartTime = "6:30",
                 Name = "Wake up",
                 IsPublic = false,
-                UsedBy = null,
+                CreatedBy = null,
                 CategoryType = 1,
                 RoutineCollectionId = 1
             };
@@ -293,7 +293,7 @@ namespace BL.UnitTest.Services
                 StartTimeString = "6:45",
                 Name = "Updated Wake up",
                 IsPublic = true,
-                UsedBy = 1,
+                CreatedBy = 1,
             };
 
             _routineRepositoryMock.Find(Arg.Is(long.Parse(routineVM.Id.ToString()))).Returns(actualRoutine);
@@ -312,7 +312,7 @@ namespace BL.UnitTest.Services
                 StartTimeString = "6:45",
                 Name = "Updated Wake up",
                 IsPublic = true,
-                UsedBy = 1,
+                CreatedBy = 1,
             };
 
             //Act
@@ -322,7 +322,7 @@ namespace BL.UnitTest.Services
                 Arg.Is<Routine>(r => r.StartTime == routineVM.StartTimeString &&
                                 r.Name == routineVM.Name &&
                                 r.IsPublic == routineVM.IsPublic &&
-                                r.UsedBy == routineVM.UsedBy));
+                                r.CreatedBy == routineVM.CreatedBy));
             await _unitOfWorkMock.Received(1).SaveChangesAsync();
             result.Success.Should().BeTrue();
         }
@@ -336,7 +336,7 @@ namespace BL.UnitTest.Services
                 StartTimeString = "6:45",
                 Name = "Updated Wake up",
                 IsPublic = true,
-                UsedBy = 1,
+                CreatedBy = 1,
             };
 
             _routineRepositoryMock.Find(Arg.Any<long>()).ReturnsNull();

@@ -12,8 +12,8 @@ using ReizzzTracking.DAL.Entities;
 namespace ReizzzTracking.DAL.Migrations
 {
     [DbContext(typeof(ReizzzTrackingV1Context))]
-    [Migration("20241009085451_Add_DeleteCascadeBehavior_Routine_RoutineCollection")]
-    partial class Add_DeleteCascadeBehavior_Routine_RoutineCollection
+    [Migration("20250209214736_Initial_Create")]
+    partial class Initial_Create
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -165,6 +165,26 @@ namespace ReizzzTracking.DAL.Migrations
                         {
                             RoleId = 1L,
                             PermissionId = 4L
+                        },
+                        new
+                        {
+                            RoleId = 1L,
+                            PermissionId = 5L
+                        },
+                        new
+                        {
+                            RoleId = 1L,
+                            PermissionId = 6L
+                        },
+                        new
+                        {
+                            RoleId = 1L,
+                            PermissionId = 7L
+                        },
+                        new
+                        {
+                            RoleId = 1L,
+                            PermissionId = 8L
                         });
                 });
 
@@ -178,6 +198,12 @@ namespace ReizzzTracking.DAL.Migrations
 
                     b.Property<long?>("CategoryType")
                         .HasColumnType("bigint");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<bool?>("IsPublic")
                         .HasColumnType("bit");
@@ -193,17 +219,14 @@ namespace ReizzzTracking.DAL.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<long?>("UsedBy")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id")
                         .HasName("PK__routines__3214EC07877522F1");
 
                     b.HasIndex("CategoryType");
 
-                    b.HasIndex("RoutineCollectionId");
+                    b.HasIndex("CreatedBy");
 
-                    b.HasIndex("UsedBy");
+                    b.HasIndex("RoutineCollectionId");
 
                     b.ToTable("routines", (string)null);
                 });
@@ -505,16 +528,16 @@ namespace ReizzzTracking.DAL.Migrations
                         .HasForeignKey("CategoryType")
                         .HasConstraintName("FK__routines__Catego__3D5E1FD2");
 
+                    b.HasOne("ReizzzTracking.DAL.Entities.User", "UsedByNavigation")
+                        .WithMany("Routines")
+                        .HasForeignKey("CreatedBy")
+                        .HasConstraintName("FK__routines__UsedBy__3C69FB99");
+
                     b.HasOne("ReizzzTracking.DAL.Entities.RoutineCollection", "RoutineCollectionNavigation")
                         .WithMany("Routines")
                         .HasForeignKey("RoutineCollectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK__routines__routinecollections");
-
-                    b.HasOne("ReizzzTracking.DAL.Entities.User", "UsedByNavigation")
-                        .WithMany("Routines")
-                        .HasForeignKey("UsedBy")
-                        .HasConstraintName("FK__routines__UsedBy__3C69FB99");
 
                     b.Navigation("CategoryTypeNavigation");
 

@@ -17,7 +17,7 @@ namespace ReizzzTracking.BL.ViewModels.RoutineViewModel
 
         public bool? IsPublic { get; set; }
 
-        public long? UsedBy { get; set; }
+        public long? CreatedBy { get; set; }
         public long CategoryType { get; set; } = 1;
         public long RoutineCollectionId { get; set; }
         public Routine ToRoutine(RoutineUpdateViewModel routineVM)
@@ -27,7 +27,7 @@ namespace ReizzzTracking.BL.ViewModels.RoutineViewModel
                 StartTime = routineVM.StartTimeString,
                 Name = routineVM.Name,
                 IsPublic = routineVM.IsPublic,
-                UsedBy = routineVM.UsedBy,
+                CreatedBy = routineVM.CreatedBy,
                 RoutineCollectionId = routineVM.RoutineCollectionId,
             };
             if (routineVM.Id != null)

@@ -1,4 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Quartz;
+using ReizzzTracking.BL.BackgroundJobs.InMemoryBackgroundJobs;
+using ReizzzTracking.BL.BackgroundJobs.LoggingBackground;
 using ReizzzTracking.BL.Services.AuthServices;
 using ReizzzTracking.BL.Services.PermissionService;
 using ReizzzTracking.BL.Services.RoutineCollectionServices;
@@ -6,12 +9,6 @@ using ReizzzTracking.BL.Services.RoutineServices;
 using ReizzzTracking.BL.Services.TodoScheduleServices;
 using ReizzzTracking.BL.Services.Utils.Authentication;
 using ReizzzTracking.BL.Utils.PasswordHasher;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 
 public static class BLDependencyInjection
 {
@@ -32,6 +29,16 @@ public static class BLDependencyInjection
         services.AddScoped<ITodoScheduleService, TodoScheduleService>();
         services.AddHttpContextAccessor();
 
+        //background job
+        services.AddQuartz(options =>
+        {
+            options.UseMicrosoftDependencyInjectionJobFactory();
+        });
+        services.AddQuartzHostedService(options =>
+        {
+            options.WaitForJobsToComplete = true;
+        });
+        services.ConfigureOptions<BackgroundJobSchedulerSetup>();
     }
 }
 

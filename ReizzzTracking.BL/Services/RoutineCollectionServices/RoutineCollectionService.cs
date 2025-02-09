@@ -169,7 +169,7 @@ namespace ReizzzTracking.BL.Services.RoutineCollectionServices
                 }
                 routineCollectionToUpdate.Name = routineCollectionVM.Name;
                 routineCollectionToUpdate.IsPublic = routineCollectionVM.IsPublic;
-                routineCollectionToUpdate.UpdatedAt = DateTime.Now;
+                routineCollectionToUpdate.UpdatedAt = DateTime.UtcNow;
                 _routineCollectionRepository.Update(routineCollectionToUpdate);
                 await _unitOfWork.SaveChangesAsync();
                 result.Success = true;

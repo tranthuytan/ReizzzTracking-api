@@ -145,7 +145,7 @@ namespace ReizzzTracking.BL.Services.TodoScheduleServices
                 //Complete Todo
                 if (todoVM.IsDone == true)
                 {
-                    todoVM.EndAt = DateTime.Now;
+                    todoVM.EndAt = DateTime.UtcNow;
                     todoVM.ActualTime = TimeDifferenceBetweenStartAtAndEndAtByTimeUnit((long)todoVM.TimeUnitId, (DateTime)todoVM.StartAt, (DateTime)todoVM.EndAt);
                 }
                 //Update Todo
