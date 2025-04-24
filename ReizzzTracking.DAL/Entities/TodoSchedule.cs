@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ReizzzTracking.DAL.Entities;
+﻿namespace ReizzzTracking.DAL.Entities;
 
 public partial class TodoSchedule
 {
     public long Id { get; set; }
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     public DateTime? StartAt { get; set; }
 

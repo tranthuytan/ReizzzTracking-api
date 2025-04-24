@@ -1,20 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using ReizzzTracking.BL.Errors.Auth;
 using ReizzzTracking.BL.Errors.Common;
-using ReizzzTracking.BL.Services.TodoScheduleServices;
 using ReizzzTracking.BL.ViewModels.ResultViewModels;
 using ReizzzTracking.BL.ViewModels.TodoScheduleViewModels;
 using ReizzzTracking.BL.ViewModels.ToDoScheduleViewModelsToDoSchedule;
 using ReizzzTracking.DAL.Common.UnitOfWork;
 using ReizzzTracking.DAL.Entities;
-using ReizzzTracking.DAL.Repositories.RoutineRepository;
 using ReizzzTracking.DAL.Repositories.TodoScheduleRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReizzzTracking.BL.Services.TodoScheduleServices
 {

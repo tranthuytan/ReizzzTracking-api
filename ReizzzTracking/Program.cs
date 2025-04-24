@@ -11,12 +11,11 @@ using ReizzzTracking.OptionsSetup;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-var a = builder.Environment;
 // Add services to the container.
 
 builder.Services
     .AddDAL(builder.Configuration)
-    .AddBl();
+    .AddBl(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -77,6 +76,20 @@ builder.Services.AddSwaggerGen(option =>
     });
 });
 
+// add cors
+var corsPolicy = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: corsPolicy,
+        policy =>
+        {
+            policy.WithOrigins("https://10.0.2.2:7229", "https://localhost:7229")
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -93,6 +106,9 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+// add cors
+app.UseCors(corsPolicy);
 
 app.MapControllers();
 

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using ReizzzTracking.BL.Errors.Auth;
 using ReizzzTracking.BL.Errors.Common;
@@ -7,17 +6,11 @@ using ReizzzTracking.BL.ViewModels.Common;
 using ReizzzTracking.BL.ViewModels.ResultViewModels;
 using ReizzzTracking.BL.ViewModels.ResultViewModels.RoutineCollectionViewModel;
 using ReizzzTracking.BL.ViewModels.RoutineCollectionViewModels;
-using ReizzzTracking.BL.ViewModels.RoutineViewModel;
 using ReizzzTracking.DAL.Common.UnitOfWork;
 using ReizzzTracking.DAL.Entities;
 using ReizzzTracking.DAL.Repositories.RoutineCollectionRepository;
 using ReizzzTracking.DAL.Repositories.RoutineRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReizzzTracking.BL.Services.RoutineCollectionServices
 {

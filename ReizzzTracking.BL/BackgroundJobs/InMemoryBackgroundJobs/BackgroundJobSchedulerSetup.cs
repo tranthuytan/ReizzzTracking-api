@@ -21,7 +21,7 @@ namespace ReizzzTracking.BL.BackgroundJobs.InMemoryBackgroundJobs
                     trigger
                         .ForJob(jobKey)
                         .StartNow()
-                        //.WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(0,0))
+                        //.WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(0, 0))
                         );
         }
     }

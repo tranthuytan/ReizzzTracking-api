@@ -1,20 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 using ReizzzTracking.BL.Errors.Auth;
 using ReizzzTracking.BL.Errors.Common;
 using ReizzzTracking.BL.ViewModels.Common;
 using ReizzzTracking.BL.ViewModels.ResultViewModels;
-using ReizzzTracking.BL.ViewModels.ResultViewModels.RoutineCollectionViewModel;
 using ReizzzTracking.BL.ViewModels.RoutineViewModel;
 using ReizzzTracking.DAL.Common.UnitOfWork;
 using ReizzzTracking.DAL.Entities;
 using ReizzzTracking.DAL.Repositories.RoutineCollectionRepository;
 using ReizzzTracking.DAL.Repositories.RoutineRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReizzzTracking.BL.Services.RoutineServices
 {
@@ -47,6 +41,7 @@ namespace ReizzzTracking.BL.Services.RoutineServices
                     throw new Exception(AuthError.UserClaimsAccessFailed);
                 }
                 Routine addRoutine = routineVM.ToRoutine(routineVM);
+                addRoutine.CreatedBy = long.Parse(creatorIdString);
                 if (routineVM.RoutineCollectionId != null)
                 {
                     _routineRepository.Add(addRoutine);
@@ -106,6 +101,13 @@ namespace ReizzzTracking.BL.Services.RoutineServices
             };
             try
             {
+                string? creatorIdString = _httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                if (creatorIdString == null)
+                {
+                    throw new Exception(AuthError.UserClaimsAccessFailed);
+                }
+
+
                 var routines = await _routineRepository.GetAll(x => x.RoutineCollectionId == request.RoutineCollectionId, null, null, ["StartTime"], [false]);
                 result.PaginatedResult.TotalRecord = routines.Count();
                 foreach (var routine in routines)
@@ -137,7 +139,7 @@ namespace ReizzzTracking.BL.Services.RoutineServices
                     var routine = await _routineRepository.Find(routineToUpdate.Id);
                     if (routine == null)
                     {
-                        throw new Exception(string.Format(CommonError.NotFoundWithId,routineToUpdate.GetType().Name,routineToUpdate.Id));
+                        throw new Exception(string.Format(CommonError.NotFoundWithId, routineToUpdate.GetType().Name, routineToUpdate.Id));
                     }
                     _routineRepository.Update(routineToUpdate, r => r.CategoryType, r => r.RoutineCollectionId);
                 }
