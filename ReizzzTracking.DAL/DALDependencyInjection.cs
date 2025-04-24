@@ -9,7 +9,6 @@ using ReizzzTracking.DAL.Repositories.RoutineCollectionRepository;
 using ReizzzTracking.DAL.Repositories.RoutineRepository;
 using ReizzzTracking.DAL.Repositories.TodoScheduleRepository;
 using ReizzzTracking.DAL.Repositories.UserRepository;
-using ReizzzTracking.DAL.Repositories.UserRoleRepository;
 
 public static class DALDependencyInjection
 {
@@ -28,7 +27,6 @@ public static class DALDependencyInjection
         services.AddScoped<IRoutineCollectionRepository, RoutineCollectionRepository>();
         services.AddScoped<IRoutineRepository, RoutineRepository>();
         services.AddScoped<ITodoScheduleRepository, TodoScheduleRepository>();
-        services.AddScoped<IUserRoleRepository, UserRoleRepository>();
     }
     public static void AddDatabase(this IServiceCollection services, IConfiguration configuration)
     {

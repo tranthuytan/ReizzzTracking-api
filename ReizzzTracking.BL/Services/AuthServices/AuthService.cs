@@ -17,18 +17,15 @@ namespace ReizzzTracking.BL.Services.AuthServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IJwtProvider _jwtProvider;
-        private readonly IUserRoleRepository _userRoleRepository;
         public AuthService(IAuthRepository authRepository,
                             IUnitOfWork unitOfWork,
                             IPasswordHasher passwordHasher,
-                            IJwtProvider jwtProvider,
-                            IUserRoleRepository userRoleRepository)
+                            IJwtProvider jwtProvider)
         {
             _authRepository = authRepository;
             _unitOfWork = unitOfWork;
             _passwordHasher = passwordHasher;
             _jwtProvider = jwtProvider;
-            _userRoleRepository = userRoleRepository;
         }
 
         public async Task<LoginResultViewModel> Login(UserLoginViewModel userLoginViewModel)
@@ -90,7 +87,7 @@ namespace ReizzzTracking.BL.Services.AuthServices
 
                 user.UserRoles.Add(new UserRole { RoleId = Role.Registered.Id });
                 user.CreatedDate = DateTime.UtcNow;
-                
+
                 _authRepository.Add(user);
                 await _unitOfWork.SaveChangesAsync();
 
