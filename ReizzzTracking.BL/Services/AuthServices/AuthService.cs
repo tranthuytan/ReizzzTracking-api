@@ -7,7 +7,6 @@ using ReizzzTracking.BL.ViewModels.UserViewModel;
 using ReizzzTracking.DAL.Common.UnitOfWork;
 using ReizzzTracking.DAL.Entities;
 using ReizzzTracking.DAL.Repositories.AuthRepository;
-using ReizzzTracking.DAL.Repositories.UserRoleRepository;
 
 namespace ReizzzTracking.BL.Services.AuthServices
 {

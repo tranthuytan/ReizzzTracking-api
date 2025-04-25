@@ -15,7 +15,8 @@ namespace ReizzzTracking.DAL.Configurations
         {
             builder.ToTable("category_types");
             builder.HasKey(c => c.Id).HasName("PK__category__3214EC07ADA88A03");
-            builder.Property(c => c.Type).HasMaxLength(50);
+            builder.Property(c => c.Name).HasMaxLength(50);
+            builder.HasData(CategoryType.GetValues());
         }
     }
 }

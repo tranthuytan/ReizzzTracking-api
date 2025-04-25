@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using ReizzzTracking.DAL.Primitives;
 
 namespace ReizzzTracking.DAL.Entities;
 
-public partial class CategoryType
+public partial class CategoryType : Enumeration<CategoryType>
 {
-    public long Id { get; set; }
-
-    public string? Type { get; set; }
+    public static readonly CategoryType Routine = new(1,"Routine");
+    public static readonly CategoryType ToDo = new(2,"ToDo");
+    public CategoryType(long id, string name) : base(id, name)
+    {
+    }
 
     public virtual ICollection<Routine> Routines { get; set; } = new List<Routine>();
 

@@ -1,0 +1,25 @@
+version: '28.0.4'
+
+volumes:
+  queue-data-volume:
+  queue-log-volume:
+
+networks:
+  reizzztrackingnetwork:
+
+services:
+  reizzztracking.rabbitmq:
+    image: rabbitmq:3-management
+    container_name: reizzztracking.rabbitmq
+    hostname: reizzztracking-queue
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - queue-data-volume:/var/lib/rabbitmq
+      - queue-log-volume:/var/log/rabbitmq
+    networks:
+      - reizzztrackingnetwork
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest

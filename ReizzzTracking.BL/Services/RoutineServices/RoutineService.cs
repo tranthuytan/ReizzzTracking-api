@@ -54,9 +54,8 @@ namespace ReizzzTracking.BL.Services.RoutineServices
                         CreatedBy = long.Parse(creatorIdString),
                         IsPublic = false
                     };
-                    _routineCollectionRepository.Add(addRoutineCollection);
-                    await _unitOfWork.SaveChangesAsync();
-                    addRoutine.RoutineCollectionId = addRoutineCollection.Id;
+
+                    addRoutine.RoutineCollectionNavigation = addRoutineCollection;
                     _routineRepository.Add(addRoutine);
                 }
                 await _unitOfWork.SaveChangesAsync();
