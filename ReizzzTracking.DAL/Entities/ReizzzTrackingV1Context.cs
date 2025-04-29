@@ -33,12 +33,10 @@ public partial class ReizzzTrackingV1Context : DbContext
 
     public virtual DbSet<UserRole> UserRoles { get; set; }
 
+    public virtual DbSet<Permission> Permissions { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Server=(local);database=reizzz_tracking_v1;uid=sa;pwd=thuytan123;TrustServerCertificate=True;");
-
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -61,10 +59,11 @@ public partial class ReizzzTrackingV1Context : DbContext
 
             entity.HasOne(r => r.RoutineCollectionNavigation).WithMany(rc => rc.Routines)
                 .HasForeignKey(r => r.RoutineCollectionId)
-                .HasConstraintName("FK__routines__routinecollections");
+                .HasConstraintName("FK__routines__routinecollections")
+                .OnDelete(DeleteBehavior.Cascade);
 
-            entity.HasOne(e => e.UsedByNavigation).WithMany(u=>u.Routines)
-                .HasForeignKey(e => e.UsedBy)
+            entity.HasOne(e => e.UsedByNavigation).WithMany(u => u.Routines)
+                .HasForeignKey(e => e.CreatedBy)
                 .HasConstraintName("FK__routines__UsedBy__3C69FB99");
         });
 
@@ -79,6 +78,7 @@ public partial class ReizzzTrackingV1Context : DbContext
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.RoutineCollections)
                 .HasForeignKey(d => d.CreatedBy)
                 .HasConstraintName("FK__routine_c__Creat__3A81B327");
+
         });
 
         modelBuilder.Entity<TodoSchedule>(entity =>

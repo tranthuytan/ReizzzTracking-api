@@ -33,7 +33,7 @@ namespace ReizzzTracking.BL.Services.Utils.Authentication
                 _options.Audience,
                 claims,
                 null,
-                DateTime.UtcNow.AddDays(1),
+                DateTime.UtcNow.AddDays(30),
                 signingCredentials);
             string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
             return tokenValue;

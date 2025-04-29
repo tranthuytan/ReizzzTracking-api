@@ -31,7 +31,7 @@ namespace ReizzzTracking.BL.Validators.RoutineValidators
             RuleFor(r => r.CategoryTypeId)
                 .NotNull()
                 .NotEmpty()
-                .ExclusiveBetween(1,2);
+                .InclusiveBetween(1,2);
         }
     }
 }

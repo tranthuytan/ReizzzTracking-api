@@ -21,11 +21,12 @@ namespace ReizzzTracking.DAL.Configurations
                 Create(Role.Registered, Permission.AddToDo),
                 Create(Role.Registered, Permission.ReadToDo),
                 Create(Role.Registered, Permission.UpdateToDo),
-                Create(Role.Registered, Permission.DeleteToDo));
-                Create(Role.Registered, Permission.AddRoutine);
-                Create(Role.Registered, Permission.ReadRoutine);
-                Create(Role.Registered, Permission.UpdateRoutine);
-                Create(Role.Registered, Permission.DeleteRoutine);
+                Create(Role.Registered, Permission.DeleteToDo),
+                Create(Role.Registered, Permission.AddRoutine),
+                Create(Role.Registered, Permission.ReadRoutine),
+                Create(Role.Registered, Permission.UpdateRoutine),
+                Create(Role.Registered, Permission.DeleteRoutine)
+            );
         }
         private static RolePermission Create(Role role, Permission permission)
         {

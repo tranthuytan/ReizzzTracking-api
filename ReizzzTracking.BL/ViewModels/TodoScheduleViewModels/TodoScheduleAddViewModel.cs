@@ -10,7 +10,7 @@ namespace ReizzzTracking.BL.ViewModels.TodoScheduleViewModels
     public class TodoScheduleAddViewModel
     {
         public string Name { get; set; }
-        public DateTime? StartAt { get; set; } = DateTime.Now;
+        public DateTime? StartAt { get; set; } = DateTime.UtcNow;
         public bool? IsDone { get; set; } = false;
         public int? EstimatedTime { get; set; }
         public long? TimeUnitId { get; set; }

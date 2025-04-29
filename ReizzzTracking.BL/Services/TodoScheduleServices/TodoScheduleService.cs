@@ -1,20 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using ReizzzTracking.BL.Errors.Auth;
 using ReizzzTracking.BL.Errors.Common;
-using ReizzzTracking.BL.Services.TodoScheduleServices;
 using ReizzzTracking.BL.ViewModels.ResultViewModels;
 using ReizzzTracking.BL.ViewModels.TodoScheduleViewModels;
 using ReizzzTracking.BL.ViewModels.ToDoScheduleViewModelsToDoSchedule;
 using ReizzzTracking.DAL.Common.UnitOfWork;
 using ReizzzTracking.DAL.Entities;
-using ReizzzTracking.DAL.Repositories.RoutineRepository;
 using ReizzzTracking.DAL.Repositories.TodoScheduleRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReizzzTracking.BL.Services.TodoScheduleServices
 {
@@ -145,8 +138,9 @@ namespace ReizzzTracking.BL.Services.TodoScheduleServices
                 //Complete Todo
                 if (todoVM.IsDone == true)
                 {
-                    todoVM.EndAt = DateTime.Now;
-                    todoVM.ActualTime = TimeDifferenceBetweenStartAtAndEndAtByTimeUnit((long)todoVM.TimeUnitId, (DateTime)todoVM.StartAt, (DateTime)todoVM.EndAt);
+                    todoVM.EndAt = DateTime.UtcNow;
+                    todoVM.ActualTime = TimeDifferenceBetweenStartAtAndEndAtByTimeUnit((long)todoVM.TimeUnitId!, (DateTime)todoVM.StartAt!, (DateTime)todoVM.EndAt!
+);
                 }
                 //Update Todo
 
@@ -163,7 +157,7 @@ namespace ReizzzTracking.BL.Services.TodoScheduleServices
                         {
                             throw new Exception(string.Format(CommonError.NotFoundWithId, nameof(TodoSchedule), todoToUpdate.Id));
                         }
-                        _todoScheduleRepository.Update(todoToUpdate, td => td.CategoryType);
+                        _todoScheduleRepository.Update(todoToUpdate, td => td.CategoryType!);
                     }
                     //Create new routine if not exist
                     else

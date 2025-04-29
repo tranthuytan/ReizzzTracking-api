@@ -1,19 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using ReizzzTracking.BL.Errors.Auth;
-using ReizzzTracking.BL.Services.PermissionService;
+﻿using ReizzzTracking.BL.Errors.Auth;
 using ReizzzTracking.BL.Services.Utils.Authentication;
 using ReizzzTracking.BL.Utils.PasswordHasher;
-using ReizzzTracking.BL.Validators.UserValidators;
 using ReizzzTracking.BL.ViewModels.ResultViewModels;
 using ReizzzTracking.BL.ViewModels.ResultViewModels.AuthResultViewModel;
 using ReizzzTracking.BL.ViewModels.UserViewModel;
 using ReizzzTracking.DAL.Common.UnitOfWork;
+using ReizzzTracking.DAL.Entities;
 using ReizzzTracking.DAL.Repositories.AuthRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReizzzTracking.BL.Services.AuthServices
 {
@@ -23,7 +16,10 @@ namespace ReizzzTracking.BL.Services.AuthServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IJwtProvider _jwtProvider;
-        public AuthService(IAuthRepository authRepository, IUnitOfWork unitOfWork, IPasswordHasher passwordHasher, IJwtProvider jwtProvider)
+        public AuthService(IAuthRepository authRepository,
+                            IUnitOfWork unitOfWork,
+                            IPasswordHasher passwordHasher,
+                            IJwtProvider jwtProvider)
         {
             _authRepository = authRepository;
             _unitOfWork = unitOfWork;
@@ -36,8 +32,12 @@ namespace ReizzzTracking.BL.Services.AuthServices
             var result = new LoginResultViewModel();
             try
             {
-                var user = await _authRepository.FirstOrDefault(u=>u.Username== userLoginViewModel.LoginUsername || u.Email==userLoginViewModel.LoginUsername);
-                var isCorrectPassword = _passwordHasher.Verify(userLoginViewModel.Password, user.Password);
+                var user = await _authRepository.FirstOrDefault(u => u.Username == userLoginViewModel.LoginUsername || u.Email == userLoginViewModel.LoginUsername);
+                if (user == null)
+                {
+                    return result;
+                }
+                var isCorrectPassword = _passwordHasher.Verify(userLoginViewModel.Password, user!.Password!);
                 //login success
                 if (user != null && isCorrectPassword)
                 {
@@ -83,8 +83,14 @@ namespace ReizzzTracking.BL.Services.AuthServices
 
                 //save new account
                 var user = userAddVM.ToUser(userAddVM);
+
+                user.UserRoles.Add(new UserRole { RoleId = Role.Registered.Id });
+                user.CreatedDate = DateTime.UtcNow;
+
                 _authRepository.Add(user);
                 await _unitOfWork.SaveChangesAsync();
+
+
                 result.Success = true;
                 result.Message = "Account created successful.";
                 return result;

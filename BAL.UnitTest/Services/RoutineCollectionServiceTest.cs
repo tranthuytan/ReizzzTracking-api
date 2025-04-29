@@ -12,6 +12,7 @@ using ReizzzTracking.DAL.Common.UnitOfWork;
 using ReizzzTracking.DAL.Entities;
 using ReizzzTracking.DAL.Repositories.BaseRepository;
 using ReizzzTracking.DAL.Repositories.RoutineCollectionRepository;
+using ReizzzTracking.DAL.Repositories.RoutineRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,11 +29,13 @@ namespace BL.UnitTest.Services
         private readonly IRoutineCollectionRepository _routineCollectionRepositoryMock;
         private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IRoutineCollectionService _routineCollectionService;
+        private readonly IRoutineRepository _routineRepository;
         public RoutineCollectionServiceTest()
         {
             _routineCollectionRepositoryMock = Substitute.For<IRoutineCollectionRepository>();
             _unitOfWorkMock = Substitute.For<IUnitOfWork>();
-            _routineCollectionService = new RoutineCollectionService(_routineCollectionRepositoryMock, _unitOfWorkMock, _httpContextAccessorMock);
+            _routineRepository = Substitute.For<IRoutineRepository>();
+            _routineCollectionService = new RoutineCollectionService(_routineCollectionRepositoryMock, _unitOfWorkMock, _httpContextAccessorMock,_routineRepository);
         }
         [Fact]
         public async Task GetPaginatedRoutineCollection_ReturnSuccess_WhenValid()
@@ -68,7 +71,7 @@ namespace BL.UnitTest.Services
                             StartTime="6:30",
                             Name="Wake up",
                             IsPublic=true,
-                            UsedBy=1,
+                            CreatedBy=1,
                             CategoryType=1,
                             RoutineCollectionId=1,
                         }
@@ -79,7 +82,7 @@ namespace BL.UnitTest.Services
                             StartTime="6:35",
                             Name="Brush teeth",
                             IsPublic=false,
-                            UsedBy=1,
+                            CreatedBy=1,
                             CategoryType=1,
                             RoutineCollectionId=1,
                         },
@@ -89,7 +92,7 @@ namespace BL.UnitTest.Services
                             StartTime="6:40",
                             Name="Make bed",
                             IsPublic=true,
-                            UsedBy=null,
+                            CreatedBy=null,
                             CategoryType=1,
                             RoutineCollectionId=1,
                         }
@@ -118,7 +121,7 @@ namespace BL.UnitTest.Services
                             StartTime="12:00",
                             Name="Eat lunch",
                             IsPublic=true,
-                            UsedBy=1,
+                            CreatedBy=1,
                             CategoryType=1,
                             RoutineCollectionId=2,
                         },
@@ -128,7 +131,7 @@ namespace BL.UnitTest.Services
                             StartTime="12:30",
                             Name="Quick sleep",
                             IsPublic=false,
-                            UsedBy=1,
+                            CreatedBy=1,
                             CategoryType=1,
                             RoutineCollectionId=2,
                         }
@@ -156,7 +159,7 @@ namespace BL.UnitTest.Services
                             StartTime="22:00",
                             Name="Brush teeth",
                             IsPublic=true,
-                            UsedBy=1,
+                            CreatedBy=1,
                             CategoryType=1,
                             RoutineCollectionId=3,
                         },
@@ -166,7 +169,7 @@ namespace BL.UnitTest.Services
                             StartTime="22:05",
                             Name="Sleep",
                             IsPublic=true,
-                            UsedBy=1,
+                            CreatedBy=1,
                             CategoryType=1,
                             RoutineCollectionId=3,
                         }

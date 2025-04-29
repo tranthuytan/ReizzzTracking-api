@@ -1,20 +1,17 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+using Quartz;
+using ReizzzTracking.BL.BackgroundJobs.InMemoryBackgroundJobs;
 using ReizzzTracking.BL.Errors.Auth;
 using ReizzzTracking.BL.Errors.Common;
+using ReizzzTracking.BL.MessageBroker.Publishers.RoutinePublishers;
 using ReizzzTracking.BL.ViewModels.Common;
 using ReizzzTracking.BL.ViewModels.ResultViewModels;
-using ReizzzTracking.BL.ViewModels.ResultViewModels.RoutineCollectionViewModel;
 using ReizzzTracking.BL.ViewModels.RoutineViewModel;
 using ReizzzTracking.DAL.Common.UnitOfWork;
 using ReizzzTracking.DAL.Entities;
 using ReizzzTracking.DAL.Repositories.RoutineCollectionRepository;
 using ReizzzTracking.DAL.Repositories.RoutineRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReizzzTracking.BL.Services.RoutineServices
 {
@@ -24,16 +21,19 @@ namespace ReizzzTracking.BL.Services.RoutineServices
         private readonly IRoutineCollectionRepository _routineCollectionRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ISchedulerFactory _schedulerFactory;
 
         public RoutineService(IRoutineRepository routineRepository,
             IRoutineCollectionRepository routineCollectionRepository,
             IHttpContextAccessor httpContextAccessor,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            ISchedulerFactory schedulerFactory)
         {
             _routineRepository = routineRepository;
             _routineCollectionRepository = routineCollectionRepository;
             _httpContextAccessor = httpContextAccessor;
             _unitOfWork = unitOfWork;
+            _schedulerFactory = schedulerFactory;
         }
 
         public async Task<ResultViewModel> AddRoutine(RoutineAddViewModel routineVM)
@@ -47,6 +47,7 @@ namespace ReizzzTracking.BL.Services.RoutineServices
                     throw new Exception(AuthError.UserClaimsAccessFailed);
                 }
                 Routine addRoutine = routineVM.ToRoutine(routineVM);
+                addRoutine.CreatedBy = long.Parse(creatorIdString);
                 if (routineVM.RoutineCollectionId != null)
                 {
                     _routineRepository.Add(addRoutine);
@@ -59,12 +60,21 @@ namespace ReizzzTracking.BL.Services.RoutineServices
                         CreatedBy = long.Parse(creatorIdString),
                         IsPublic = false
                     };
-                    _routineCollectionRepository.Add(addRoutineCollection);
-                    await _unitOfWork.SaveChangesAsync();
-                    addRoutine.RoutineCollectionId = addRoutineCollection.Id;
+
+                    addRoutine.RoutineCollectionNavigation = addRoutineCollection;
                     _routineRepository.Add(addRoutine);
                 }
                 await _unitOfWork.SaveChangesAsync();
+                // change to another background job instead of the current scheduler
+                var scheduler = await _schedulerFactory.GetScheduler();
+                var job = JobBuilder.Create<RoutineBackgroundJobScheduler>()
+                                            .WithIdentity(nameof(RoutineBackgroundJobScheduler) + $"routineId-{addRoutine.Id}")
+                                            .Build();
+                var trigger = TriggerBuilder.Create()
+                                            .WithIdentity(nameof(RoutineBackgroundJobScheduler) + $"routineId-{addRoutine.Id}")
+                                            .StartNow()
+                                            .Build();
+                await scheduler.ScheduleJob(job, trigger);
                 result.Success = true;
             }
             catch (Exception ex)
@@ -106,6 +116,13 @@ namespace ReizzzTracking.BL.Services.RoutineServices
             };
             try
             {
+                string? creatorIdString = _httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                if (creatorIdString == null)
+                {
+                    throw new Exception(AuthError.UserClaimsAccessFailed);
+                }
+
+
                 var routines = await _routineRepository.GetAll(x => x.RoutineCollectionId == request.RoutineCollectionId, null, null, ["StartTime"], [false]);
                 result.PaginatedResult.TotalRecord = routines.Count();
                 foreach (var routine in routines)
@@ -137,9 +154,9 @@ namespace ReizzzTracking.BL.Services.RoutineServices
                     var routine = await _routineRepository.Find(routineToUpdate.Id);
                     if (routine == null)
                     {
-                        throw new Exception(string.Format(CommonError.NotFoundWithId,routineToUpdate.GetType().Name,routineToUpdate.Id));
+                        throw new Exception(string.Format(CommonError.NotFoundWithId, routineToUpdate.GetType().Name, routineToUpdate.Id));
                     }
-                    _routineRepository.Update(routineToUpdate, r => r.CategoryType, r => r.RoutineCollectionId);
+                    _routineRepository.Update(routineToUpdate, r => r.CategoryType!, r => r.RoutineCollectionId!);
                 }
                 //Create new routine if not exist
                 else
