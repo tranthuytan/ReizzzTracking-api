@@ -10,16 +10,9 @@ namespace ReizzzTracking.BL.MessageBroker.Publishers.RoutinePublishers
         {
         }
 
-        public async Task PublishRoutineIsEnabledCheck(Routine routine)
+        public async Task PublishRoutineIsEnabledCheck(BackgroundRoutineCheckedEvent backgroundRoutineCheckedEvent)
         {
-            if (routine.IsActive == true)
-                await _eventBus.PublishAsync(new BackgroundRoutineCheckedEvent
-                {
-                    Id = routine.Id,
-                    Name=routine.Name,
-                    IsActive = routine.IsActive,
-                    StartTime = routine.StartTime
-                });
+                await _eventBus.PublishAsync(backgroundRoutineCheckedEvent);
         }
     }
 }

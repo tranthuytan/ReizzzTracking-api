@@ -15,16 +15,16 @@ namespace ReizzzTracking.Controllers
         {
             _routinePublisher = routinePublisher;
         }
-        [HttpGet]
-        public async Task<IActionResult> Publish()
-        {
-            await _routinePublisher.PublishRoutineIsEnabledCheck(new Routine
-            {
-                Id=1,
-                StartTime="04:30",
-                IsActive=true
-            });
-            return Ok();
-        }
+        // [HttpGet]
+        // public async Task<IActionResult> Publish()
+        // {
+        //     await _routinePublisher.PublishRoutineIsEnabledCheck(new Routine
+        //     {
+        //         Id=1,
+        //         StartTime="04:30",
+        //         IsActive=true
+        //     });
+        //     return Ok();
+        // }
     }
 }

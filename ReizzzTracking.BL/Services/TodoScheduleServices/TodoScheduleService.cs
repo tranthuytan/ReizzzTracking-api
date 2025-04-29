@@ -139,7 +139,8 @@ namespace ReizzzTracking.BL.Services.TodoScheduleServices
                 if (todoVM.IsDone == true)
                 {
                     todoVM.EndAt = DateTime.UtcNow;
-                    todoVM.ActualTime = TimeDifferenceBetweenStartAtAndEndAtByTimeUnit((long)todoVM.TimeUnitId, (DateTime)todoVM.StartAt, (DateTime)todoVM.EndAt);
+                    todoVM.ActualTime = TimeDifferenceBetweenStartAtAndEndAtByTimeUnit((long)todoVM.TimeUnitId!, (DateTime)todoVM.StartAt!, (DateTime)todoVM.EndAt!
+);
                 }
                 //Update Todo
 
@@ -156,7 +157,7 @@ namespace ReizzzTracking.BL.Services.TodoScheduleServices
                         {
                             throw new Exception(string.Format(CommonError.NotFoundWithId, nameof(TodoSchedule), todoToUpdate.Id));
                         }
-                        _todoScheduleRepository.Update(todoToUpdate, td => td.CategoryType);
+                        _todoScheduleRepository.Update(todoToUpdate, td => td.CategoryType!);
                     }
                     //Create new routine if not exist
                     else

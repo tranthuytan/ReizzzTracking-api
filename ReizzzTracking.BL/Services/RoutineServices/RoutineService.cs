@@ -1,7 +1,10 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
+using Quartz;
+using ReizzzTracking.BL.BackgroundJobs.InMemoryBackgroundJobs;
 using ReizzzTracking.BL.Errors.Auth;
 using ReizzzTracking.BL.Errors.Common;
+using ReizzzTracking.BL.MessageBroker.Publishers.RoutinePublishers;
 using ReizzzTracking.BL.ViewModels.Common;
 using ReizzzTracking.BL.ViewModels.ResultViewModels;
 using ReizzzTracking.BL.ViewModels.RoutineViewModel;
@@ -18,16 +21,19 @@ namespace ReizzzTracking.BL.Services.RoutineServices
         private readonly IRoutineCollectionRepository _routineCollectionRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ISchedulerFactory _schedulerFactory;
 
         public RoutineService(IRoutineRepository routineRepository,
             IRoutineCollectionRepository routineCollectionRepository,
             IHttpContextAccessor httpContextAccessor,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            ISchedulerFactory schedulerFactory)
         {
             _routineRepository = routineRepository;
             _routineCollectionRepository = routineCollectionRepository;
             _httpContextAccessor = httpContextAccessor;
             _unitOfWork = unitOfWork;
+            _schedulerFactory = schedulerFactory;
         }
 
         public async Task<ResultViewModel> AddRoutine(RoutineAddViewModel routineVM)
@@ -59,6 +65,16 @@ namespace ReizzzTracking.BL.Services.RoutineServices
                     _routineRepository.Add(addRoutine);
                 }
                 await _unitOfWork.SaveChangesAsync();
+                // change to another background job instead of the current scheduler
+                var scheduler = await _schedulerFactory.GetScheduler();
+                var job = JobBuilder.Create<RoutineBackgroundJobScheduler>()
+                                            .WithIdentity(nameof(RoutineBackgroundJobScheduler) + $"routineId-{addRoutine.Id}")
+                                            .Build();
+                var trigger = TriggerBuilder.Create()
+                                            .WithIdentity(nameof(RoutineBackgroundJobScheduler) + $"routineId-{addRoutine.Id}")
+                                            .StartNow()
+                                            .Build();
+                await scheduler.ScheduleJob(job, trigger);
                 result.Success = true;
             }
             catch (Exception ex)
@@ -140,7 +156,7 @@ namespace ReizzzTracking.BL.Services.RoutineServices
                     {
                         throw new Exception(string.Format(CommonError.NotFoundWithId, routineToUpdate.GetType().Name, routineToUpdate.Id));
                     }
-                    _routineRepository.Update(routineToUpdate, r => r.CategoryType, r => r.RoutineCollectionId);
+                    _routineRepository.Update(routineToUpdate, r => r.CategoryType!, r => r.RoutineCollectionId!);
                 }
                 //Create new routine if not exist
                 else

@@ -17,12 +17,13 @@ namespace ReizzzTracking.DAL.Common.UnitOfWork
         public UnitOfWork(IDbFactory factory)
         {
             _factory = factory;
+            _context = DbContext;
         }
         public ReizzzTrackingV1Context DbContext
         {
             get
             {
-                if (_context == null)
+                if (_context is null)
                     _context = _factory.Init();
                 return _context;
             }

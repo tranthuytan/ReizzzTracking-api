@@ -7,7 +7,7 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
         public void Add(TEntity entity);
         public void Remove(TEntity entity);
         public void Update(TEntity entity, params Expression<Func<TEntity, object>>[] propertyToIgnore);
-        public Task<TEntity?> Find(long id);
+        public Task<TEntity?> Find(long? id);
         public Task<TEntity?> FirstOrDefault(Expression<Func<TEntity, bool>>? expression = null, Func<IQueryable<TEntity>, IQueryable<TEntity>>? includeFunc = null);
         public Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>>? expression = null,
                                                         Func<IQueryable<TEntity>, IQueryable<TEntity>>? includeFunc = null,

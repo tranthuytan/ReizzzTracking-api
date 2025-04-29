@@ -19,7 +19,7 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
             _dbSet.Add(entity);
         }
 
-        public async Task<TEntity?> Find(long id)
+        public async Task<TEntity?> Find(long? id)
         {
             return await _dbSet.FindAsync(id);
         }
@@ -61,7 +61,7 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
                 query = query.Take(take ?? default(int));
             }
 
-            if (orderByProperty != null && orderByProperty.Any())
+            if (orderByProperty != null && orderByProperty.Any() && descending is not null && descending.Any())
             {
                 var orderedQuery = ApplyOrderBy(query, orderByProperty[0], descending[0]);
                 for (int i = 1; i < orderByProperty.Length; i++)
@@ -114,7 +114,7 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
             {
                 query = includeFunc(query);
             }
-            if (orderByProperty != null && orderByProperty.Any())
+            if (orderByProperty != null && orderByProperty.Any() && descending !=null && descending.Any())
             {
                 var orderedQuery = ApplyOrderBy(query, orderByProperty[0], descending[0]);
                 for (int i = 1; i < orderByProperty.Length; i++)

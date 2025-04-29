@@ -10,6 +10,7 @@ using ReizzzTracking.BL.MessageBroker.EventBus;
 using ReizzzTracking.BL.MessageBroker.Publishers.BasePublishers;
 using ReizzzTracking.BL.MessageBroker.Publishers.RoutinePublishers;
 using ReizzzTracking.BL.Services.AuthServices;
+using ReizzzTracking.BL.Services.EmailServices;
 using ReizzzTracking.BL.Services.PermissionService;
 using ReizzzTracking.BL.Services.RoutineCollectionServices;
 using ReizzzTracking.BL.Services.RoutineServices;
@@ -37,6 +38,14 @@ public static class BLDependencyInjection
         services.AddScoped<IRoutineService, RoutineService>();
         services.AddScoped<IRoutineCollectionService, RoutineCollectionService>();
         services.AddScoped<ITodoScheduleService, TodoScheduleService>();
+        services.AddScoped<IEmailService,EmailService>();
+
+        // fluent email
+        services
+            .AddFluentEmail(configuration["Email:SenderEmail"],configuration["Email:Sender"])
+            .AddSmtpSender(configuration["Email:Host"],configuration.GetValue<int>("Email:Port")
+                            // ,configuration["Email:SenderEmail"],configuration["Email:SenderPass"]
+                            );
 
         // publisher
         services.AddScoped<RoutinePublisher>();
@@ -51,7 +60,6 @@ public static class BLDependencyInjection
             options.WaitForJobsToComplete = true;
         });
         services.ConfigureOptions<BackgroundJobSchedulerSetup>();
-
 
         //// rabbitMQ
         services.Configure<MessageBrokerSettings>(configuration.GetSection("RabbitMQ"));

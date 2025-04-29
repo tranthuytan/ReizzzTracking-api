@@ -60,6 +60,11 @@ namespace ReizzzTracking.BL.Services.RoutineCollectionServices
                 {
                     throw new Exception(string.Format(CommonError.NotFoundWithId, nameof(RoutineCollection), id));
                 }
+                var routines = await _routineRepository.GetAll(r => r.RoutineCollectionId == routineCollectionToDelete.Id);
+                foreach (Routine routine in routines)
+                {
+                    _routineRepository.Remove(routine);
+                }
                 _routineCollectionRepository.Remove(routineCollectionToDelete);
                 await _unitOfWork.SaveChangesAsync();
                 result.Success = true;
@@ -107,7 +112,7 @@ namespace ReizzzTracking.BL.Services.RoutineCollectionServices
                     RoutineCollectionGetViewModel routineCollectionVM = new RoutineCollectionGetViewModel();
                     if (routineCollectionVM.FromRoutineCollection(routineCollection) != null)
                     {
-                        result.PaginatedResult.Data.Add(routineCollectionVM.FromRoutineCollection(routineCollection));
+                        result.PaginatedResult.Data.Add(routineCollectionVM!.FromRoutineCollection(routineCollection)!);
                     }
                     else
                     {
@@ -136,7 +141,7 @@ namespace ReizzzTracking.BL.Services.RoutineCollectionServices
                 {
                     throw new Exception(string.Format(CommonError.NotFoundWithId, nameof(RoutineCollection), id));
                 }
-                resultData = resultData.FromRoutineCollection(routineCollection);
+                resultData = resultData!.FromRoutineCollection(routineCollection)!;
                 result.PaginatedResult.Data.Add(resultData);
                 result.PaginatedResult.IsPaginated = false;
                 result.PaginatedResult.TotalRecord = 1;

@@ -23,3 +23,9 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+  reizzztracking.papercut:
+    image: changemakerstudiosus/papercut-smtp:latest
+    container_name: ReizzzTracking.Papercut
+    ports:
+      - 8080:80
+      - 25:25

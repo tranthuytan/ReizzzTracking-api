@@ -1,10 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
 using Quartz;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReizzzTracking.BL.BackgroundJobs.InMemoryBackgroundJobs
 {
@@ -21,7 +16,7 @@ namespace ReizzzTracking.BL.BackgroundJobs.InMemoryBackgroundJobs
                     trigger
                         .ForJob(jobKey)
                         .StartNow()
-                        //.WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(0, 0))
+                        .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(0, 0))
                         );
         }
     }
