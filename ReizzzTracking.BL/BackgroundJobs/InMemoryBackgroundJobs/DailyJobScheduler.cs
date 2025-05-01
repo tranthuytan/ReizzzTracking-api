@@ -38,9 +38,9 @@ namespace ReizzzTracking.BL.BackgroundJobs.InMemoryBackgroundJobs
             {
                 if (routine is not null)
                 {
-
+                    JobKey jobKey = JobKey.Create(nameof(RoutineBackgroundJobScheduler) + $"routineId-{routine.Id}", "group1");
                     IJobDetail routineJob = JobBuilder.Create<RoutineBackgroundJobScheduler>()
-                                                .WithIdentity(nameof(RoutineBackgroundJobScheduler) + $"routineId-{routine.Id}")
+                                                .WithIdentity(jobKey)
                                                 .UsingJobData("routine", JsonConvert.SerializeObject(routine))
                                                 .Build();
                     string[] routineStartTimeSplitted = routine!.StartTime!.Split(':');
@@ -58,7 +58,7 @@ namespace ReizzzTracking.BL.BackgroundJobs.InMemoryBackgroundJobs
                     int timeDifferenceInMinute = (int)timeDifference.TotalMinutes;
 
                     ITrigger trigger = TriggerBuilder.Create()
-                                            .WithIdentity(nameof(RoutineBackgroundJobScheduler) + $"routineId-{routine.Id}")
+                                            .WithIdentity(jobKey.Name, jobKey.Group)
                                             .StartAt(DateBuilder.FutureDate(timeDifferenceInMinute, IntervalUnit.Minute))
                                             .Build();
                     await scheduler.ScheduleJob(routineJob, trigger);

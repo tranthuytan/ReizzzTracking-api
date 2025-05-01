@@ -10,14 +10,10 @@ namespace ReizzzTracking.BL.ViewModels.RoutineViewModel
     public class RoutineUpdateViewModel
     {
         public long? Id { get; set; }
-
-        public string StartTimeString { get; set; } = "";
-
-        public string Name { get; set; } = "";
-
+        public string StartTimeString { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public bool? IsActive { get; set; }
         public bool? IsPublic { get; set; }
-
-        public long? CreatedBy { get; set; }
         public long CategoryType { get; set; } = 1;
         public long RoutineCollectionId { get; set; }
         public Routine ToRoutine(RoutineUpdateViewModel routineVM)
@@ -26,8 +22,8 @@ namespace ReizzzTracking.BL.ViewModels.RoutineViewModel
             {
                 StartTime = routineVM.StartTimeString,
                 Name = routineVM.Name,
+                IsActive = routineVM.IsActive,
                 IsPublic = routineVM.IsPublic,
-                CreatedBy = routineVM.CreatedBy,
                 RoutineCollectionId = routineVM.RoutineCollectionId,
             };
             if (routineVM.Id != null)

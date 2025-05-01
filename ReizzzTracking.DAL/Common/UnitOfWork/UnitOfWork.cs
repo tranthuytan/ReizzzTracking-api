@@ -1,41 +1,24 @@
-﻿using ReizzzTracking.DAL.Common.DbFactory;
-using ReizzzTracking.DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ReizzzTracking.DAL.Entities;
 
 namespace ReizzzTracking.DAL.Common.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
         private ReizzzTrackingV1Context _context;
-        private readonly IDbFactory _factory;
 
 
-        public UnitOfWork(IDbFactory factory)
+        public UnitOfWork(ReizzzTrackingV1Context context)
         {
-            _factory = factory;
-            _context = DbContext;
-        }
-        public ReizzzTrackingV1Context DbContext
-        {
-            get
-            {
-                if (_context is null)
-                    _context = _factory.Init();
-                return _context;
-            }
+            _context = context;
         }
         public void SaveChanges()
         {
-            DbContext.SaveChanges();
+            _context.SaveChanges();
         }
 
         public async Task SaveChangesAsync()
         {
-            await DbContext.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }

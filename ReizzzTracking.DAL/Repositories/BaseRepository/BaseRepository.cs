@@ -114,7 +114,7 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
             {
                 query = includeFunc(query);
             }
-            if (orderByProperty != null && orderByProperty.Any() && descending !=null && descending.Any())
+            if (orderByProperty != null && orderByProperty.Any() && descending != null && descending.Any())
             {
                 var orderedQuery = ApplyOrderBy(query, orderByProperty[0], descending[0]);
                 for (int i = 1; i < orderByProperty.Length; i++)
