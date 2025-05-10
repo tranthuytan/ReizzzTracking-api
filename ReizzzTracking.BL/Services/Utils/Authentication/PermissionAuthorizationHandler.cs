@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using ReizzzTracking.BL.Services.PermissionService;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace ReizzzTracking.BL.Services.Utils.Authentication

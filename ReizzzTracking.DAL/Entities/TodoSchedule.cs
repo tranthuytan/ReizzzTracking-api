@@ -5,9 +5,9 @@ public partial class TodoSchedule
     public long Id { get; set; }
     public string Name { get; set; } = string.Empty;
 
-    public DateTime? StartAt { get; set; }
+    public DateTime StartAtUtc { get; set; }
 
-    public DateTime? EndAt { get; set; }
+    public DateTime? EndAtUtc { get; set; }
 
     public long? AppliedFor { get; set; }
 

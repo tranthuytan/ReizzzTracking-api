@@ -19,7 +19,7 @@ namespace ReizzzTracking.BL.MessageBroker.Consumers.RoutineConsumers
 
         public Task Consume(ConsumeContext<BackgroundRoutineCheckedEvent> context)
         {
-            // configue push notification
+            // configue email notification
             var backgroundRoutineCheckedEvent = context.Message;
             string subject = "Routine reminder";
             string body = $"It's time to do your routine: {backgroundRoutineCheckedEvent.Name} at {backgroundRoutineCheckedEvent.StartTime}";

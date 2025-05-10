@@ -12,6 +12,5 @@ namespace ReizzzTracking.BL.ViewModels.TodoScheduleViewModels
     /// </summary>
     public class GetTodoScheduleRequestViewModel : GetRequestViewModel
     {
-        public long UserId { get; set; }
     }
 }

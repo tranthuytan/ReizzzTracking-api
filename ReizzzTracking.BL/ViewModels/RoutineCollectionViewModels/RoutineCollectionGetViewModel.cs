@@ -29,12 +29,12 @@ namespace ReizzzTracking.BL.ViewModels.RoutineCollectionViewModels
                 CreatedAt = routineCollection.CreatedAt,
                 UpdatedAt = routineCollection.UpdatedAt
             };
-            if (routineCollection.CreatedByNavigation != null)
+            if (routineCollection.CreatedByNavigation is not null)
             {
                 result.CreatorId = routineCollection.CreatedByNavigation.Id;
                 result.CreatorName = routineCollection.CreatedByNavigation.Name;
             }
-            if (routineCollection.Routines != null && routineCollection.Routines.Any())
+            if (routineCollection.Routines is not null && routineCollection.Routines.Any())
             {
                 result.Routines = new List<RoutineGetViewModel>();
                 foreach (var routine in routineCollection.Routines)

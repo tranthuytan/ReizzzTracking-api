@@ -6,8 +6,8 @@ namespace ReizzzTracking.DAL.Entities;
 
 public partial class CategoryType : Enumeration<CategoryType>
 {
-    public static readonly CategoryType Routine = new(1,"Routine");
-    public static readonly CategoryType ToDo = new(2,"ToDo");
+    public static readonly CategoryType Routine = new(1, "Routine");
+    public static readonly CategoryType ToDo = new(2, "ToDo");
     public CategoryType(long id, string name) : base(id, name)
     {
     }

@@ -24,7 +24,7 @@ namespace ReizzzTracking.BL.ViewModels.RoutineCollectionViewModels
                 Name = routineCollectionVM.Name,
                 IsPublic = routineCollectionVM.IsPublic,
             };
-            if (routineCollectionVM.RoutineAddVMs != null && routineCollectionVM.RoutineAddVMs.Any())
+            if (routineCollectionVM.RoutineAddVMs is not null && routineCollectionVM.RoutineAddVMs.Any())
             {
                 result.Routines = new List<Routine>();
                 foreach (var routine in routineCollectionVM.RoutineAddVMs)

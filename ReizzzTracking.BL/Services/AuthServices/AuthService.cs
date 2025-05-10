@@ -33,13 +33,13 @@ namespace ReizzzTracking.BL.Services.AuthServices
             try
             {
                 var user = await _authRepository.FirstOrDefault(u => u.Username == userLoginViewModel.LoginUsername || u.Email == userLoginViewModel.LoginUsername);
-                if (user == null)
+                if (user is null)
                 {
                     return result;
                 }
                 var isCorrectPassword = _passwordHasher.Verify(userLoginViewModel.Password, user!.Password!);
                 //login success
-                if (user != null && isCorrectPassword)
+                if (user is not null && isCorrectPassword)
                 {
                     var jwtToken = _jwtProvider.Generate(user);
                     result.jwt = jwtToken;
@@ -62,17 +62,17 @@ namespace ReizzzTracking.BL.Services.AuthServices
             try
             {
                 //checking duplicated
-                if (userAddVM.Email != null)
+                if (userAddVM.Email is not null)
                 {
                     var isDuplicatedEmail = await _authRepository.GetUserByEmail(userAddVM.Email);
-                    if (isDuplicatedEmail != null)
+                    if (isDuplicatedEmail is not null)
                     {
                         result.Message = AuthError.DuplicatedEmail;
                         return result;
                     }
                 }
                 var isDuplicatedUsername = await _authRepository.GetUserByUsername(userAddVM.Username);
-                if (isDuplicatedUsername != null)
+                if (isDuplicatedUsername is not null)
                 {
                     result.Message = AuthError.DuplicatedUsername;
                     return result;

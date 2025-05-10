@@ -1,6 +1,5 @@
 ﻿using ReizzzTracking.BL.MessageBroker.EventBus;
 using ReizzzTracking.BL.MessageBroker.Publishers.BasePublishers;
-using ReizzzTracking.DAL.Entities;
 
 namespace ReizzzTracking.BL.MessageBroker.Publishers.RoutinePublishers
 {
@@ -12,7 +11,7 @@ namespace ReizzzTracking.BL.MessageBroker.Publishers.RoutinePublishers
 
         public async Task PublishRoutineIsEnabledCheck(BackgroundRoutineCheckedEvent backgroundRoutineCheckedEvent)
         {
-                await _eventBus.PublishAsync(backgroundRoutineCheckedEvent);
+            await _eventBus.PublishAsync(backgroundRoutineCheckedEvent);
         }
     }
 }

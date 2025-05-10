@@ -87,8 +87,8 @@ public partial class ReizzzTrackingV1Context : DbContext
 
             entity.ToTable("todo_schedule");
 
-            entity.Property(e => e.EndAt).HasColumnType("datetime");
-            entity.Property(e => e.StartAt).HasColumnType("datetime");
+            entity.Property(e => e.EndAtUtc).HasColumnType("datetime");
+            entity.Property(e => e.StartAtUtc).HasColumnType("datetime");
             entity.Property(e => e.Name).HasColumnType("nvarchar(50)");
             //entity.Property(e => e.ActualTime).HasColumnType("decimal(10,10)");
 

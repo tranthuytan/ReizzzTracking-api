@@ -5,10 +5,11 @@ using Microsoft.Extensions.Options;
 using Quartz;
 using ReizzzTracking.BL.BackgroundJobs.InMemoryBackgroundJobs;
 using ReizzzTracking.BL.MessageBroker;
+using ReizzzTracking.BL.MessageBroker.Consumer.ToDoConsumers;
 using ReizzzTracking.BL.MessageBroker.Consumers.RoutineConsumers;
 using ReizzzTracking.BL.MessageBroker.EventBus;
-using ReizzzTracking.BL.MessageBroker.Publishers.BasePublishers;
 using ReizzzTracking.BL.MessageBroker.Publishers.RoutinePublishers;
+using ReizzzTracking.BL.MessageBroker.Publishers.ToDoPublisher;
 using ReizzzTracking.BL.Services.AuthServices;
 using ReizzzTracking.BL.Services.EmailServices;
 using ReizzzTracking.BL.Services.PermissionService;
@@ -38,17 +39,18 @@ public static class BLDependencyInjection
         services.AddScoped<IRoutineService, RoutineService>();
         services.AddScoped<IRoutineCollectionService, RoutineCollectionService>();
         services.AddScoped<ITodoScheduleService, TodoScheduleService>();
-        services.AddScoped<IEmailService,EmailService>();
+        services.AddScoped<IEmailService, EmailService>();
 
         // fluent email
         services
-            .AddFluentEmail(configuration["Email:SenderEmail"],configuration["Email:Sender"])
-            .AddSmtpSender(configuration["Email:Host"],configuration.GetValue<int>("Email:Port")
-                            // ,configuration["Email:SenderEmail"],configuration["Email:SenderPass"]
+            .AddFluentEmail(configuration["Email:SenderEmail"], configuration["Email:Sender"])
+            .AddSmtpSender(configuration["Email:HostLocal"], configuration.GetValue<int>("Email:PortLocal")
+                            // , configuration["Email:SenderEmail"], configuration["Email:SenderPass"]
                             );
 
         // publisher
         services.AddScoped<RoutinePublisher>();
+        services.AddScoped<ToDoPublisher>();
 
         // HttpContextAccessor
         services.AddHttpContextAccessor();
@@ -71,11 +73,12 @@ public static class BLDependencyInjection
             busConfiguration.SetKebabCaseEndpointNameFormatter();
 
             busConfiguration.AddConsumer<BackgroundRoutineCheckedEventConsumer>();
+            busConfiguration.AddConsumer<BackgroundToDoCheckedEventConsumer>();
 
             busConfiguration.UsingRabbitMq((context, rabbitConfigure) =>
             {
                 MessageBrokerSettings settings = context.GetRequiredService<MessageBrokerSettings>();
-                rabbitConfigure.Host(settings.Host,"/", hostCfg =>
+                rabbitConfigure.Host(settings.Host, "/", hostCfg =>
                 {
                     hostCfg.Username(settings.Username);
                     hostCfg.Password(settings.Password);

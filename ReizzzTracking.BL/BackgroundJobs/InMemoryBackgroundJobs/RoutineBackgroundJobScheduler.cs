@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using Quartz;
 using ReizzzTracking.BL.MessageBroker.Publishers.RoutinePublishers;
-using ReizzzTracking.DAL.Common.DateTimeToUtc;
 using ReizzzTracking.DAL.Entities;
 using ReizzzTracking.DAL.Repositories.UserRepository;
 

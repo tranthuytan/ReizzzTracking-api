@@ -26,7 +26,7 @@ namespace ReizzzTracking.BL.ViewModels.RoutineViewModel
                 IsPublic = routineVM.IsPublic,
                 RoutineCollectionId = routineVM.RoutineCollectionId,
             };
-            if (routineVM.Id != null)
+            if (routineVM.Id is not null)
             {
                 result.Id = (long)routineVM.Id;
             }

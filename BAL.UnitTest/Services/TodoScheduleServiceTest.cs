@@ -49,7 +49,7 @@ namespace BL.UnitTest.Services
                 td.EstimatedTime == 30 &&
                 td.Id == 1 &&
                 td.TimeUnitId == 1 &&
-                td.StartAt == routineAddVM.StartAt &&
+                td.StartAtUtc == routineAddVM.StartAt &&
                 td.AppliedFor == 1 &&
                 td.IsDone == false &&
                 td.CategoryType == 2

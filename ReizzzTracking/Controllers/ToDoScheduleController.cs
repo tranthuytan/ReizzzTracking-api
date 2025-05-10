@@ -20,6 +20,7 @@ namespace ReizzzTracking.Controllers
         {
             _todoScheduleService = todoScheduleService;
         }
+        
         [HttpPost()]
         [HasPermission(DAL.Common.Enums.Permission.AddToDo)]
         public async Task<IActionResult> UserAddToDoSchedule(TodoScheduleAddViewModel todoVM)
@@ -42,6 +43,7 @@ namespace ReizzzTracking.Controllers
             }
             return Unauthorized(result);
         }
+        
         [HttpGet("{todoschedule_id}")]
         [HasPermission(DAL.Common.Enums.Permission.ReadToDo)]
         public async Task<IActionResult> GetToDoById(long todoschedule_id)
@@ -53,6 +55,7 @@ namespace ReizzzTracking.Controllers
             }
             return NotFound(result);
         }
+        
         [HttpGet]
         [HasPermission(DAL.Common.Enums.Permission.ReadToDo)]
         public async Task<IActionResult> GetToDos([FromQuery]GetTodoScheduleRequestViewModel request)
@@ -64,17 +67,19 @@ namespace ReizzzTracking.Controllers
             }
             return BadRequest(result);
         }
+        
         [HttpPut]
         [HasPermission(DAL.Common.Enums.Permission.UpdateToDo)]
         public async Task<IActionResult> UpdateOrAddToDos([FromBody] TodoScheduleUpdateViewModel[] todoVMs)
         {
-            var result = await _todoScheduleService.UpdateOrAddToDoSchedule(todoVMs);
+            var result = await _todoScheduleService.UpdateToDoSchedule(todoVMs);
             if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result);
         }
+        
         [HttpDelete()]
         [HasPermission(DAL.Common.Enums.Permission.DeleteToDo)]
         public async Task<IActionResult> DeleteToDo([FromBody]long[] todoschedule_ids)

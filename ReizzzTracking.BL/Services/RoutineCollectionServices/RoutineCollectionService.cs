@@ -56,7 +56,7 @@ namespace ReizzzTracking.BL.Services.RoutineCollectionServices
             try
             {
                 RoutineCollection? routineCollectionToDelete = await _routineCollectionRepository.Find(id);
-                if (routineCollectionToDelete == null)
+                if (routineCollectionToDelete is null)
                 {
                     throw new Exception(string.Format(CommonError.NotFoundWithId, nameof(RoutineCollection), id));
                 }
@@ -92,7 +92,7 @@ namespace ReizzzTracking.BL.Services.RoutineCollectionServices
             try
             {
                 var requestorIdString = _httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-                if (requestorIdString == null)
+                if (requestorIdString is null)
                 {
                     throw new Exception(AuthError.UserClaimsAccessFailed);
                 }
@@ -110,7 +110,7 @@ namespace ReizzzTracking.BL.Services.RoutineCollectionServices
                 foreach (var routineCollection in routineCollectionTuple.Item2)
                 {
                     RoutineCollectionGetViewModel routineCollectionVM = new RoutineCollectionGetViewModel();
-                    if (routineCollectionVM.FromRoutineCollection(routineCollection) != null)
+                    if (routineCollectionVM.FromRoutineCollection(routineCollection) is not null)
                     {
                         result.PaginatedResult.Data.Add(routineCollectionVM!.FromRoutineCollection(routineCollection)!);
                     }
@@ -137,7 +137,7 @@ namespace ReizzzTracking.BL.Services.RoutineCollectionServices
             {
                 RoutineCollection? routineCollection = await _routineCollectionRepository.FirstOrDefault(expression: rc => rc.Id == id,
                     includeFunc: rc => rc.Include(rc => rc.Routines));
-                if (routineCollection == null)
+                if (routineCollection is null)
                 {
                     throw new Exception(string.Format(CommonError.NotFoundWithId, nameof(RoutineCollection), id));
                 }
@@ -161,7 +161,7 @@ namespace ReizzzTracking.BL.Services.RoutineCollectionServices
             try
             {
                 RoutineCollection? routineCollectionToUpdate = await _routineCollectionRepository.Find(routineCollectionVM.Id);
-                if (routineCollectionToUpdate == null)
+                if (routineCollectionToUpdate is null)
                 {
                     throw new Exception(string.Format(CommonError.NotFoundWithId, nameof(RoutineCollection), routineCollectionVM.Id));
                 }

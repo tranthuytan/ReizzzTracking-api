@@ -9,22 +9,18 @@ namespace ReizzzTracking.BL.ViewModels.TodoScheduleViewModels
 {
     public class TodoScheduleAddViewModel
     {
-        public string Name { get; set; }
-        public DateTime? StartAt { get; set; } = DateTime.UtcNow;
-        public bool? IsDone { get; set; } = false;
-        public int? EstimatedTime { get; set; }
-        public long? TimeUnitId { get; set; }
-        public long? CategoryType { get; set; } = 2;
+        public string Name { get; set; } = string.Empty;
+        public DateTime StartAt { get; set; }
+        public int EstimatedTime { get; set; }
+        public long TimeUnitId { get; set; }
         public TodoSchedule ToToDoSchedule(TodoScheduleAddViewModel todoVM)
         {
             return new TodoSchedule
             {
                 Name = todoVM.Name,
-                StartAt = todoVM.StartAt,
-                IsDone = todoVM.IsDone,
+                StartAtUtc = todoVM.StartAt.AddHours(-7),
                 EstimatedTime = todoVM.EstimatedTime,
                 TimeUnitId = todoVM.TimeUnitId,
-                CategoryType = todoVM.CategoryType,
             };
         }
     }

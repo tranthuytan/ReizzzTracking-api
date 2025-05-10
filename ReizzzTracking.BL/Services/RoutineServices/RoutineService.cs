@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Quartz;
-using Quartz.Impl.Matchers;
 using ReizzzTracking.BL.BackgroundJobs.InMemoryBackgroundJobs;
 using ReizzzTracking.BL.Errors.Common;
-using ReizzzTracking.BL.Errors.Routine;
 using ReizzzTracking.BL.Extensions;
 using ReizzzTracking.BL.ViewModels.Common;
 using ReizzzTracking.BL.ViewModels.ResultViewModels;
@@ -45,7 +43,7 @@ namespace ReizzzTracking.BL.Services.RoutineServices
                 long currentUserId = _httpContextAccessor.GetCurrentUserIdFromJwt();
                 Routine addRoutine = routineVM.ToRoutine(routineVM);
                 addRoutine.CreatedBy = currentUserId;
-                if (routineVM.RoutineCollectionId != null)
+                if (routineVM.RoutineCollectionId is not null)
                 {
                     _routineRepository.Add(addRoutine);
                 }
@@ -83,7 +81,7 @@ namespace ReizzzTracking.BL.Services.RoutineServices
             {
 
                 Routine? routine = await _routineRepository.Find(id);
-                if (routine == null)
+                if (routine is null)
                     throw new Exception(string.Format(CommonError.NotFoundWithId, typeof(Routine).Name, id));
                 result.PaginatedResult.Data.Add(resultData.FromRoutine(routine));
                 result.PaginatedResult.IsPaginated = false;
@@ -140,17 +138,17 @@ namespace ReizzzTracking.BL.Services.RoutineServices
                 long currentUserId = _httpContextAccessor.GetCurrentUserIdFromJwt();
                 routineToUpdate.CreatedBy = currentUserId;
                 //Update existing Routine
-                if (routineVM.Id != null)
+                if (routineVM.Id is not null)
                 {
                     //Check if routine is existed
                     var routine = await _routineRepository.Find(routineToUpdate.Id);
-                    if (routine == null)
+                    if (routine is null)
                     {
                         throw new Exception(string.Format(CommonError.NotFoundWithId, routineToUpdate.GetType().Name, routineToUpdate.Id));
                     }
                     if (routine.CreatedBy != routineToUpdate.CreatedBy)
                     {
-                        throw new Exception(RoutineError.UserWithNoPermission);
+                        throw new Exception(CommonError.NoPermissionWithThisEntity);
                     }
                     routine.StartTime = routineToUpdate.StartTime;
                     routine.Name = routineToUpdate.Name;
@@ -183,7 +181,7 @@ namespace ReizzzTracking.BL.Services.RoutineServices
                 foreach (long id in ids)
                 {
                     Routine? routineToDelete = await _routineRepository.Find(id);
-                    if (routineToDelete == null)
+                    if (routineToDelete is null)
                     {
                         throw new ArgumentNullException("routineToDelete", $"There's no routine with that Id = ${id}");
                     }
@@ -199,6 +197,7 @@ namespace ReizzzTracking.BL.Services.RoutineServices
             }
             return result;
         }
+
         private async Task CheckRoutineStartTimeAndSetupBackgroundJob(Routine routine)
         {
             string nowTimeString = DateTime.UtcNow.AddHours(7).ToString("HH:mm");
@@ -209,7 +208,7 @@ namespace ReizzzTracking.BL.Services.RoutineServices
 
                 JobKey existingRoutineJobKey = JobKey.Create(nameof(RoutineBackgroundJobScheduler) + $"routineId-{routine.Id}", "group1");
                 var jobDetail = await scheduler.GetJobDetail(existingRoutineJobKey);
-                if (jobDetail != null)
+                if (jobDetail is not null)
                 {
                     await scheduler.DeleteJob(existingRoutineJobKey);
                 }

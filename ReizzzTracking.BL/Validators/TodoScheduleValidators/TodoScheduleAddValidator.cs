@@ -29,10 +29,10 @@ namespace ReizzzTracking.BL.Validators.TodoScheduleValidators
                 .NotEmpty()
                 .ExclusiveBetween(1, TimeUnit.GetValues().Count);
 
-            RuleFor(td => td.CategoryType)
+            RuleFor(td => td.StartAt)
                 .NotNull()
                 .NotEmpty()
-                .Equal(2L);
+                .GreaterThanOrEqualTo(DateTime.UtcNow.AddHours(7)).WithMessage("ToDo must have the start time after now in UTC+7");
         }
     }
 }

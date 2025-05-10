@@ -26,6 +26,7 @@ namespace ReizzzTracking.BL.BackgroundJobs.InMemoryBackgroundJobs
             {
                 return;
             }
+
             if (jobType.Equals(typeof(Routine).ToString()))
             {
                 var routineJson = context.JobDetail.JobDataMap.GetString("routine");
@@ -50,14 +51,41 @@ namespace ReizzzTracking.BL.BackgroundJobs.InMemoryBackgroundJobs
                                                                     0);
                         DateTime utcNow = DateTime.UtcNow;
                         TimeSpan timeDifference = routineStartTimeUtc - utcNow;
-                        int timeDifferenceInMinute = (int)timeDifference.TotalMinutes;
+                        int timeDifferenceInSecond = (int)timeDifference.TotalSeconds;
 
                         var trigger = TriggerBuilder.Create()
                                                     .WithIdentity(jobKey.Name, jobKey.Group)
-                                                    .StartAt(DateBuilder.FutureDate(timeDifferenceInMinute, IntervalUnit.Minute))
+                                                    .StartAt(DateBuilder.FutureDate(timeDifferenceInSecond, IntervalUnit.Second))
                                                     .Build();
                         await scheduler.ScheduleJob(job, trigger);
                         _logger.LogInformation($"{nameof(JobSchedulerForNewEntity)} completed for routine with routineId = {routine.Id} ...");
+                    }
+                }
+            }
+
+            if (jobType.Equals(typeof(TodoSchedule).ToString()))
+            {
+                var toDoJson = context.JobDetail.JobDataMap.GetString("toDo");
+                if (toDoJson is not null)
+                {
+                    var toDo = JsonConvert.DeserializeObject<TodoSchedule>(toDoJson);
+                    if (toDo is not null)
+                    {
+                        JobKey jobKey = JobKey.Create(nameof(TodoScheduleBackgroundJob) + $"toDoId-{toDo.Id}", "group1");
+                        var job = JobBuilder.Create<TodoScheduleBackgroundJob>()
+                                                    .WithIdentity(jobKey)
+                                                    .UsingJobData("toDo", JsonConvert.SerializeObject(toDo))
+                                                    .Build();
+                        DateTime utcNow = DateTime.UtcNow;
+                        TimeSpan timeDifference = toDo.StartAtUtc - utcNow;
+                        int timeDifferenceInSecond = (int)timeDifference.TotalSeconds;
+
+                        var trigger = TriggerBuilder.Create()
+                                                    .WithIdentity(jobKey.Name, jobKey.Group)
+                                                    .StartAt(DateBuilder.FutureDate(timeDifferenceInSecond, IntervalUnit.Second))
+                                                    .Build();
+                        await scheduler.ScheduleJob(job, trigger);
+                        _logger.LogInformation($"{nameof(JobSchedulerForNewEntity)} completed for ToDo with toDoId = {toDo.Id} ...");
                     }
                 }
             }

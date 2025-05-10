@@ -11,13 +11,15 @@ namespace ReizzzTracking.BL.ViewModels.ToDoScheduleViewModelsToDoSchedule
     public class TodoScheduleGetViewModel
     {
         public long Id { get; set; }
-        public string Name { get; set; }
-        public DateTime? StartAt { get; set; }
-        public DateTime? EndAt { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public DateTime? StartAt => StartAtUtc.GetValueOrDefault().AddHours(7);
+        public DateTime? StartAtUtc { get; set; }
+        public DateTime? EndAt => EndAtUtc is null ? null : EndAtUtc.GetValueOrDefault().AddHours(7);
+        public DateTime? EndAtUtc { get; set; }
         public bool? IsDone { get; set; }
         public int? EstimatedTime { get; set; }
         public decimal? ActualTime { get; set; }
-        public long? TimeUnitId { get; set; }
+        public string? TimeUnitString { get; set; }
         public long? CategoryType { get; set; }
         public TodoScheduleGetViewModel FromToDoSchedule(TodoSchedule todoSchedule)
         {
@@ -25,12 +27,12 @@ namespace ReizzzTracking.BL.ViewModels.ToDoScheduleViewModelsToDoSchedule
             {
                 Id = todoSchedule.Id,
                 Name = todoSchedule.Name,
-                StartAt = todoSchedule.StartAt,
-                EndAt = todoSchedule.EndAt,
+                StartAtUtc = todoSchedule.StartAtUtc,
+                EndAtUtc = todoSchedule.EndAtUtc,
                 IsDone = todoSchedule.IsDone,
                 EstimatedTime = todoSchedule.EstimatedTime,
                 ActualTime = todoSchedule.ActualTime,
-                TimeUnitId = todoSchedule.TimeUnitId,
+                TimeUnitString = TimeUnit.FromValue((int)todoSchedule.TimeUnitId!)!.Name,
                 CategoryType = todoSchedule.CategoryType
             };
         }

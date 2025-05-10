@@ -1,5 +1,3 @@
-version: '28.0.4'
-
 volumes:
   queue-data-volume:
   queue-log-volume:
