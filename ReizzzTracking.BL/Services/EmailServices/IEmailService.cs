@@ -1,5 +1,3 @@
-using ReizzzTracking.DAL.Entities;
-
 namespace ReizzzTracking.BL.Services.EmailServices
 {
     public interface IEmailService
