@@ -15,11 +15,11 @@ namespace ReizzzTracking.DAL.Configurations
         {
             builder.ToTable("permissions");
             builder.HasKey(x => x.Id);
-            IEnumerable<Permission> permissions = Enum.GetValues<Common.Enums.Permission>().Select(x => new Permission
+            List<Permission> permissions = Enum.GetValues<Common.Enums.Permission>().Select(x => new Permission
             {
                 Id = (int)x,
                 Name = x.ToString()
-            });
+            }).ToList();
             builder.HasData(permissions);
         }
     }

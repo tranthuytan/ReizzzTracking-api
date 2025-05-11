@@ -16,8 +16,9 @@ namespace ReizzzTracking.BL.ViewModels.RoutineViewModel
         public string? Name { get; set; }
 
         public bool? IsPublic { get; set; }
+        public bool? IsActive { get; set; }
 
-        public long? UsedBy { get; set; }
+        public long? CreatedBy { get; set; }
 
         public long? CategoryType { get; set; }
 
@@ -30,7 +31,8 @@ namespace ReizzzTracking.BL.ViewModels.RoutineViewModel
                 StartTime = routine.StartTime,
                 Name = routine.Name,
                 IsPublic = routine.IsPublic,
-                UsedBy = routine.UsedBy,
+                IsActive = routine.IsActive,
+                CreatedBy = routine.CreatedBy,
                 CategoryType = routine.CategoryType,
                 RoutineCollectionId = routine.RoutineCollectionId
             };
@@ -43,7 +45,8 @@ namespace ReizzzTracking.BL.ViewModels.RoutineViewModel
                 StartTime = routineVM.StartTime,
                 Name = routineVM.Name,
                 IsPublic = routineVM.IsPublic,
-                UsedBy = routineVM.UsedBy,
+                IsActive = routineVM.IsActive,
+                CreatedBy = routineVM.CreatedBy,
                 CategoryType = routineVM.CategoryType,
                 RoutineCollectionId = routineVM.RoutineCollectionId
             };

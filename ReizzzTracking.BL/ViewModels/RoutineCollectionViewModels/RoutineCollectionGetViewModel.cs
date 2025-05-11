@@ -21,21 +21,20 @@ namespace ReizzzTracking.BL.ViewModels.RoutineCollectionViewModels
         public ICollection<RoutineGetViewModel>? Routines { get; set; }
         public RoutineCollectionGetViewModel? FromRoutineCollection(RoutineCollection routineCollection)
         {
-            if (routineCollection.CreatedByNavigation == null)
-            {
-                return null;
-            }
             RoutineCollectionGetViewModel result = new RoutineCollectionGetViewModel
             {
                 Id = routineCollection.Id,
-                CreatorId = routineCollection.CreatedByNavigation.Id,
-                CreatorName = routineCollection.CreatedByNavigation.Name,
                 CollectionName = routineCollection.Name,
                 IsPublic = routineCollection.IsPublic,
                 CreatedAt = routineCollection.CreatedAt,
                 UpdatedAt = routineCollection.UpdatedAt
             };
-            if (routineCollection.Routines != null && routineCollection.Routines.Any())
+            if (routineCollection.CreatedByNavigation is not null)
+            {
+                result.CreatorId = routineCollection.CreatedByNavigation.Id;
+                result.CreatorName = routineCollection.CreatedByNavigation.Name;
+            }
+            if (routineCollection.Routines is not null && routineCollection.Routines.Any())
             {
                 result.Routines = new List<RoutineGetViewModel>();
                 foreach (var routine in routineCollection.Routines)

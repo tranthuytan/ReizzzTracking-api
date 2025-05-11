@@ -1,13 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ReizzzTracking.DAL.Entities;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ReizzzTracking.BL.Services.Utils.Authentication
 {
@@ -33,7 +29,7 @@ namespace ReizzzTracking.BL.Services.Utils.Authentication
                 _options.Audience,
                 claims,
                 null,
-                DateTime.UtcNow.AddDays(1),
+                DateTime.UtcNow.AddDays(30),
                 signingCredentials);
             string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
             return tokenValue;

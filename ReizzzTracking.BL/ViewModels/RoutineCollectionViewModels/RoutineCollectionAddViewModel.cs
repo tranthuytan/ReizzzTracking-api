@@ -1,4 +1,5 @@
-﻿using ReizzzTracking.DAL.Entities;
+﻿using ReizzzTracking.BL.ViewModels.RoutineViewModel;
+using ReizzzTracking.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +15,24 @@ namespace ReizzzTracking.BL.ViewModels.RoutineCollectionViewModels
         public string Name { get; set; } = "New Routine Collection";
 
         public bool IsPublic { get; set; }
+        public List<RoutineAddViewModel>? RoutineAddVMs { get; set; }
         public RoutineCollection ToRoutineCollection(RoutineCollectionAddViewModel routineCollectionVM)
         {
-            return new RoutineCollection
+            var result = new RoutineCollection
             {
                 CreatedBy = routineCollectionVM.CreatedBy,
                 Name = routineCollectionVM.Name,
-                IsPublic = routineCollectionVM.IsPublic
+                IsPublic = routineCollectionVM.IsPublic,
             };
+            if (routineCollectionVM.RoutineAddVMs is not null && routineCollectionVM.RoutineAddVMs.Any())
+            {
+                result.Routines = new List<Routine>();
+                foreach (var routine in routineCollectionVM.RoutineAddVMs)
+                {
+                    result.Routines.Add(routine.ToRoutine(routine));
+                }
+            }
+            return result;
         }
     }
 }

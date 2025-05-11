@@ -12,8 +12,9 @@ public partial class Routine
     public string? Name { get; set; }
 
     public bool? IsPublic { get; set; }
+    public bool? IsActive { get; set; }
 
-    public long? UsedBy { get; set; }
+    public long? CreatedBy { get; set; }
 
     public long? CategoryType { get; set; }
     public long? RoutineCollectionId { get; set; }

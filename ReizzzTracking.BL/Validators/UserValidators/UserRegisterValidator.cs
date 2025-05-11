@@ -35,7 +35,7 @@ namespace ReizzzTracking.BL.Validators.UserValidators
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .NotNull()
-                .ExclusiveBetween((byte)0,(byte)2);
+                .InclusiveBetween((byte)0,(byte)2);
 
             RuleFor(u => u.Birthday)
                 .Cascade(CascadeMode.Stop)

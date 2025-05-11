@@ -10,6 +10,6 @@ namespace ReizzzTracking.BL.ViewModels.ResultViewModels.RoutineCollectionViewMod
 {
     public class RoutineCollectionGetResultViewModel : ResultViewModel
     {
-        public PaginationGetViewModel<RoutineCollectionGetViewModel> PaginatedResult { get; set; }
+        public PaginationGetViewModel<RoutineCollectionGetViewModel> PaginatedResult { get; set; } = new PaginationGetViewModel<RoutineCollectionGetViewModel>();
     }
 }

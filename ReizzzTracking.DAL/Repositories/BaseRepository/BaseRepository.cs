@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReizzzTracking.DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReizzzTracking.DAL.Repositories.BaseRepository
 {
@@ -24,7 +19,7 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
             _dbSet.Add(entity);
         }
 
-        public async Task<TEntity?> Find(long id)
+        public async Task<TEntity?> Find(long? id)
         {
             return await _dbSet.FindAsync(id);
         }
@@ -32,11 +27,11 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
         public async Task<TEntity?> FirstOrDefault(Expression<Func<TEntity, bool>>? expression = null, Func<IQueryable<TEntity>, IQueryable<TEntity>>? includeFunc = null)
         {
             IQueryable<TEntity> query = _dbSet;
-            if (expression != null)
+            if (expression is not null)
             {
                 query = query.Where(expression);
             }
-            if (includeFunc != null)
+            if (includeFunc is not null)
             {
                 query = includeFunc(query);
             }
@@ -52,21 +47,21 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
         {
             IQueryable<TEntity> query = _dbSet;
 
-            if (expression != null)
+            if (expression is not null)
             {
                 query = query.Where(expression);
             }
 
-            if (includeFunc != null)
+            if (includeFunc is not null)
             {
                 query = includeFunc(query);
             }
-            if (take != null)
+            if (take is not null)
             {
                 query = query.Take(take ?? default(int));
             }
 
-            if (orderByProperty != null && orderByProperty.Any())
+            if (orderByProperty is not null && orderByProperty.Any() && descending is not null && descending.Any())
             {
                 var orderedQuery = ApplyOrderBy(query, orderByProperty[0], descending[0]);
                 for (int i = 1; i < orderByProperty.Length; i++)
@@ -101,13 +96,13 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
                                                                    bool[]? descending = null
                                                                    )
         {
-            if (descending != null && orderByProperty != null && (descending.Length != orderByProperty.Length))
+            if (descending is not null && orderByProperty is not null && (descending.Length != orderByProperty.Length))
             {
                 throw new ArgumentException("desceding's Length and orderByPropery's Length must be the same");
             }
             IQueryable<TEntity> query = _dbSet;
 
-            if (expression != null)
+            if (expression is not null)
             {
                 query = query.Where(expression);
             }
@@ -115,11 +110,11 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
             {
                 query = query.Where(condition);
             }
-            if (includeFunc != null)
+            if (includeFunc is not null)
             {
                 query = includeFunc(query);
             }
-            if (orderByProperty != null && orderByProperty.Any())
+            if (orderByProperty is not null && orderByProperty.Any() && descending is not null && descending.Any())
             {
                 var orderedQuery = ApplyOrderBy(query, orderByProperty[0], descending[0]);
                 for (int i = 1; i < orderByProperty.Length; i++)
@@ -142,7 +137,7 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
         {
             var entityType = typeof(TEntity);
             var property = entityType.GetProperty(orderByProperty);
-            if (property == null)
+            if (property is null)
             {
                 throw new ArgumentException($"{entityType} doesn't have property {orderByProperty}");
             }
@@ -160,7 +155,7 @@ namespace ReizzzTracking.DAL.Repositories.BaseRepository
         {
             var entityType = typeof(TEntity);
             var property = entityType.GetProperty(orderByProperty);
-            if (property == null)
+            if (property is null)
             {
                 throw new ArgumentException($"{entityType} doesn't have property {orderByProperty}");
             }

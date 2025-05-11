@@ -1,6 +1,4 @@
 ﻿using ReizzzTracking.DAL.Primitives;
-using System;
-using System.Collections.Generic;
 
 namespace ReizzzTracking.DAL.Entities;
 

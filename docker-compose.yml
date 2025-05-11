@@ -1,0 +1,73 @@
+volumes:
+  queue-data-volume:
+  queue-log-volume:
+  sqlvolume:
+
+networks:
+  reizzztrackingnetwork:
+    driver: bridge
+
+services:
+  # reizzztracking:
+  #   image: ${DOCKER_REGISTRY-}reizzztracking
+  #   build: 
+  #     context: .
+  #     dockerfile: ReizzzTracking/Dockerfile
+  #   ports:
+  #     - "5000:5000"
+  #     - "5001:5001"
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_URLS=http://0.0.0.0:5000
+  #   restart: on-failure
+  #   depends_on:
+  #     reizzztracking.rabbitmq:
+  #       condition: service_healthy
+  #     reizzztracking.papercut:
+  #       condition: service_started
+  #     reizzztracking.database:
+  #       condition: service_started
+  #   networks:
+  #     - reizzztrackingnetwork
+  # reizzztracking.database:
+  #   image: mcr.microsoft.com/mssql/server:2022-latest
+  #   container_name: reizzztracking.database
+  #   ports:
+  #     - "11433:1433"
+  #   environment:
+  #     SA_PASSWORD: "Password123456!"
+  #     ACCEPT_EULA: "Y"
+  #   volumes:
+  #     - sqlvolume:/var/opt/mssql
+  #   networks:
+  #     - reizzztrackingnetwork
+    
+  reizzztracking.rabbitmq:
+    image: rabbitmq:3-management
+    container_name: reizzztracking.rabbitmq
+    hostname: reizzztracking-queue
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - queue-data-volume:/var/lib/rabbitmq
+      - queue-log-volume:/var/log/rabbitmq
+    networks:
+      - reizzztrackingnetwork
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  reizzztracking.papercut:
+    image: changemakerstudiosus/papercut-smtp:latest
+    container_name: ReizzzTracking.Papercut
+    hostname: reizzztracking.papercut
+    ports:
+      - 8080:80
+      - 25:25
+    networks:
+      - reizzztrackingnetwork

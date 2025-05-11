@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ReizzzTracking.DAL.Common.DbFactory;
 using ReizzzTracking.DAL.Common.UnitOfWork;
 using ReizzzTracking.DAL.Entities;
 using ReizzzTracking.DAL.Repositories.AuthRepository;
@@ -20,7 +19,6 @@ public static class DALDependencyInjection
     }
     public static void AddRepositories(this IServiceCollection services)
     {
-        services.AddScoped<IDbFactory, DbFactory>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IAuthRepository, AuthRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
