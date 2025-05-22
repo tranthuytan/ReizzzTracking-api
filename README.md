@@ -1,3 +1,7 @@
+Requirement for the app to run:
+Docker Desktop
+.net 8.0 runtime
+
 - Open the folder Reizzz_Tracking with VScode
 - Open the terminal and type "docker compose up" to run dependencies
 - Run the app
